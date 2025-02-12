@@ -1,0 +1,59 @@
+.hero {
+  padding-bottom: 4rem;
+  position: relative;
+
+  background-image: linear-gradient(
+    rgba(34, 34, 34, 0.65),
+    rgba(34, 34, 34, 0.65)
+  ), url("https://3dlook.ai/wp-content/uploads/2023/03/fashion-ecommerce-in-2023_-the-retailers-handbook-_v1-1.jpg");
+  background-size: cover;
+  color: var(--primary-clr-100)
+}
+.hero-content{
+    padding-top: clamp(2rem, 100%, 11.5vw);
+}
+.hero-content-inner{
+    text-align: center;
+    & h1{
+        margin-top: 1rem;
+        font-size: 3.25rem;
+        margin-bottom: 2rem;
+        line-height: 1.3;
+        text-decoration: underline ;
+        text-underline-offset:1rem;
+    }
+    & p {
+        font-size: 1.25rem;
+        line-height: 1.6;
+        margin-bottom: 3rem;
+        max-width: 70ch;
+        margin-inline: auto;
+        & span{
+          font-weight: bold;
+          font-style: italic;
+          text-decoration: underline;
+          text-underline-offset: 6px;
+        }
+    }
+    
+    .btn {
+        font-size: 1.25rem;
+        font-weight: 600;
+        background-color: var(--primary-clr-100);
+        color: #fff;
+        text-decoration: none;
+        display: inline-block;
+        padding: 1rem 2rem;
+        border-radius: .5rem;
+        color: black;
+        border: 1px solid var(--primary-clr-100);
+        transition: .25s;
+    
+        &:where(:hover, :focus-visible) {
+            background-color: var(--primary-clr-900);
+            color: var(--primary-clr-100);
+            border: 1px solid var(--primary-clr-100);
+        }
+    }
+}
+
