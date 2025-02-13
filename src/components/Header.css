@@ -1,0 +1,71 @@
+.header-wrapper {
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.main-header {
+    font-family: "Inter", sans-serif;
+    display: flex;
+    align-items: center;
+    padding: 20px 30px;
+    width: 100%;
+    max-width: 1000px;
+    justify-content: space-between;
+    position: relative;
+}
+
+.navbar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex: 1;
+    margin-right: 5px;
+}
+
+.nav-links {
+    display: flex;
+    font-size: 14px;
+    font-weight: 100;
+    gap: 20px;
+    color:#000000;
+}
+
+.icons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+    margin-left: 5px;
+}
+
+.Logo {
+    width: 140px;
+    height: auto;
+    display: flex;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+ul {
+    margin: 0;
+    padding: 0; /* Also resets default padding */
+    list-style: none; /* Removes bullet points */
+}
+
+a {
+    font-weight: 500;
+    color: #000000b7;
+    text-decoration: inherit;
+    display: inline-block ;
+    
+  }
+  a:hover {
+   color: inherit;
+   text-decoration: underline;
+   transform: scale(1.075);
+   transition: transform 0.001s ease-in-out;
+   
+  }
