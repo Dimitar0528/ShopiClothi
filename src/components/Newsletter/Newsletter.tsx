@@ -1,12 +1,11 @@
-import React from "react";
 import "./Newsletter.css";
 
-export default function Newsletter() {
+export default function Newsletter(){
   return (
     <div className="newsletter-container">
       <div className="newsletter-inner">
         <div className="newsletter-left">
-          <div className="newsletter-heading">Join 2,000+ subscribers</div>
+          <div className="newsletter-heading">Join our newsletter</div>
           <div className="newsletter-subheading">
             Stay updated with everything about our website and products.
           </div>
@@ -38,3 +37,4 @@ export default function Newsletter() {
     </div>
   );
 };
+

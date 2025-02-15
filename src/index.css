@@ -6,17 +6,19 @@
   box-sizing: border-box;
 }
 
-:root{
+:root {
   --primary-clr-100: hsl(0, 0%, 100%);
   --primary-clr-900: hsl(0, 0%, 0%);
   --accent-clr-100: hsl(220, 14%, 96%);
   --accent-clr-900: hsl(223, 9%, 15%);
   --secondary-clr-purple: hsl(275, 86%, 36%);
 }
-a{
-  text-decoration: none;
-  color: var(--primary-clr-900);
-}
+
 html {
   font-family: 'Poppins', sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-clr-900);
 }

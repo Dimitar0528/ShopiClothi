@@ -115,10 +115,10 @@ export default function Footer (){
         </div>
       </div>
       <div className="copyright">
-          <p class="copyright-text">
+          <p className="copyright-text">
             Copyright &copy; {year} {" "}
             <a href="/">
-              ShopiClothi.netlify.app
+              shopiclothi.netlify.app
             </a>
           </p>
       </div>
