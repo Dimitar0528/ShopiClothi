@@ -1,27 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+:root {
+  font-family: "Poppins", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
 
-<<<<<<< Updated upstream
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-:root{
-  --primary-clr-100: hsl(0, 0%, 100%);
-  --primary-clr-900: hsl(0, 0%, 0%);
-  --accent-clr-100: hsl(220, 14%, 96%);
-  --accent-clr-900: hsl(223, 9%, 15%);
-  --secondary-clr-purple: hsl(275, 86%, 36%);
-}
-a{
-  text-decoration: none;
-  color: var(--primary-clr-900);
-}
-html {
-  font-family: 'Poppins', sans-serif;
-}
-=======
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #ffffff;
@@ -31,7 +13,7 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-/* 
+
 a {
   font-weight: 500;
   color: #000000b7;
@@ -45,7 +27,7 @@ a:hover {
  transform: scale(1.075);
  transition: transform 0.001s ease-in-out;
  
-} */
+}
 
 body {
   margin: 0;
@@ -56,6 +38,24 @@ body {
   
 }
 
+#root {
+  width: 100%;
+  height: 100%;
+  
+  text-align: center;
+}
 
 
->>>>>>> Stashed changes
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root{
+  --primary-clr-100: hsl(0, 0%, 100%);
+  --primary-clr-900: hsl(0, 0%, 0%);
+  --accent-clr-100: hsl(220, 14%, 96%);
+  --accent-clr-900: hsl(223, 9%, 15%);
+  --secondary-clr-purple: hsl(275, 86%, 36%);
+}

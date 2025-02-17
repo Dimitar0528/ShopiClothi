@@ -1,0 +1,150 @@
+.header-wrapper {
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: white;
+    z-index: 1000;
+}
+
+.header-content {
+    font-family: "Inter", sans-serif;
+    display: flex;
+    align-items: center;
+    padding: 20px 30px;
+    width: 100%;
+    max-width: 1000px;
+    justify-content: space-between;
+    position: relative;
+}
+
+.navbar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex: 1;
+    margin-right: 5px;
+}
+
+.nav-links {
+    display: flex;
+    font-size: 14px;
+    font-weight: 100;
+    gap: 20px;
+    color: #000000;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links.open {
+    display: block;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+}
+
+.nav-links li {
+    margin: 10px 0;
+    text-align: center;
+}
+
+.profile-icon.open {
+    display: block;
+    position: absolute;
+    top: 60px; /* Position above the nav-links */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 32px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+    z-index: 1001; /* Ensure it appears above the nav-links */
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .icons {
+        display: none;
+    }
+
+    .profile {
+        display: none;
+    }
+
+    .profile-icon.open {
+        display: block;
+        margin-top: 10px;
+        text-align: center;
+        width: 24px; /* Smaller size for the profile icon */
+    }
+}
+
+@media (min-width: 769px) {
+    .profile-icon {
+        display: none;
+    }
+}
+
+.Logo {
+    width: 140px;
+    height: auto;
+    display: flex;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.icons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+    margin-left: 5px;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+a {
+    font-weight: 500;
+    color: #000000b7;
+    text-decoration: inherit;
+    display: inline-block;
+}
+
+a:hover {
+    color: inherit;
+    text-decoration: underline;
+    transform: scale(1.075);
+    transition: transform 0.001s ease-in-out;
+}
