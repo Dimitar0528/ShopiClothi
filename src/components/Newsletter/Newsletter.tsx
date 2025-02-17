@@ -1,5 +1,5 @@
 import "./Newsletter.css";
-
+import { Link } from "react-router";
 export default function Newsletter(){
   return (
     <div className="newsletter-container">
@@ -14,9 +14,12 @@ export default function Newsletter(){
         <div className="newsletter-right">
           <div className="newsletter-form">
             <input
-              type="text"
+              type="email"
               placeholder="Enter your email"
               className="newsletter-input"
+              required
+              pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+              title="Please enter a valid email address."
             />
             <button type="submit" className="newsletter-button">
               Subscribe
@@ -25,11 +28,9 @@ export default function Newsletter(){
 
           <div className="newsletter-policy">
             We care about your data in our{" "}
-            <u
-              style={{ textUnderlineOffset: ".3rem" }}
-              className="newsletter-link">
+            <Link to="/privacy-policy" className="newsletter-link">
               privacy policy
-            </u>
+            </Link>
             .
           </div>
         </div>

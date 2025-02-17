@@ -26,6 +26,7 @@
         font-size: 1.25rem;
         line-height: 1.6;
         margin-bottom: 3rem;
+        padding-inline: .25rem;
         max-width: 70ch;
         margin-inline: auto;
         & span{
@@ -48,12 +49,29 @@
         color: black;
         border: 1px solid var(--primary-clr-100);
         transition: .25s;
-    
-        &:where(:hover, :focus-visible) {
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        
+          &::before {
+            content: "";
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background-color: var(--primary-clr-900);
+            transition: top 0.3s ease-in-out;
+            z-index: -1;
+          }
+        
+          &:where(:hover, :focus-visible) {
             color: var(--primary-clr-100);
             border: 1px solid var(--primary-clr-100);
-        }
+          }
+        
+          &:where(:hover, :focus-visible)::before {
+            top: 0;
+          }
     }
 }
-

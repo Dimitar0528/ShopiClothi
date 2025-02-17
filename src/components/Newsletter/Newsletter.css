@@ -6,7 +6,7 @@
 .newsletter-inner {
     display: flex;
     align-items: center;
-    background-color: #f3f4f6;
+    background-color: var(--accent-clr-100);
     padding: 2rem;
     border-radius: 1rem;
     color: #4b5563;
@@ -26,7 +26,7 @@
     font-size: 2rem;
     margin-bottom: .35rem;
     font-weight: 800;
-    color: #1f2937;
+    color: var(--accent-clr-900);
 }
 
 .newsletter-subheading {
@@ -48,7 +48,7 @@
     width: 50%;
     height: 3rem;
     padding: .7rem;
-    border: 1px solid #d1d5db;
+    border: 1px solid hsl(from var(--accent-clr-100) h s 70% );
     border-radius: .5rem;
     font-size: 1rem;
     color: #1f2937;
@@ -58,15 +58,18 @@
     cursor: pointer;
     width: 25%;
     height: 3rem;
-    background-color: #7c3aed;
-    color: white;
-    border-radius: 8px;
+    background-color: var(--secondary-clr-purple);
+    color: var(--primary-clr-100);
+    border-radius: .5rem;
+    border: transparent;
     font-size: 1rem;
-    transition: background-color 0.3s ease-in-out;
+    transition: .3s ease-in-out;
 }
 
-.newsletter-button:hover {
-    background-color: #6d28d9;
+.newsletter-button:where(:hover, :focus-visible) {
+    outline: transparent;
+    background-color: hsl(from var(--secondary-clr-purple) h 60% 35%);
+    border-radius: 2rem;
 }
 
 .newsletter-policy {
@@ -77,11 +80,15 @@
 
 .newsletter-link {
     cursor: pointer;
-    transition: color 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+    padding: .15rem;
+    text-decoration: underline;
+    text-underline-offset: .3rem;
 }
 
-.newsletter-link:hover {
-    color: #4b5563;
+.newsletter-link:where(:hover, :focus-visible) {
+    color: var(--accent-clr-100);
+    background-color: var(--accent-clr-900);
 }
     @media (width < 560px){
         .newsletter-input{

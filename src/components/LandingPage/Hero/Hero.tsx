@@ -1,4 +1,4 @@
-import React from "react";
+import { Link } from "react-router";
 import "./Hero.css";
 
 export default function Hero() {
@@ -13,9 +13,9 @@ export default function Hero() {
               second-hand clothes to update your look. Curated to match your
               unique style while keeping the planet in mind.
             </p>
-            <a href="#" className="btn">
-              Start dressing well
-            </a>
+            <Link to='/' className="btn">
+              <span>Start dressing well</span>
+            </Link>
           </div>
         </div>
       </div>
