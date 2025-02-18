@@ -7,7 +7,9 @@ export default function Hero() {
       <div className="hero">
         <div className="hero-content">
           <div className="hero-content-inner">
-            <h1>Year-Round Sustainable Style</h1>
+            <div className="heading">
+              <h1>Year-Round Sustainable Style</h1>
+            </div>
             <p>
               <span>ShopiClothi</span> makes it easy to find great
               second-hand clothes to update your look. Curated to match your

@@ -6,11 +6,13 @@ import Faq from "./components/Footer/FAQ/FAQ";
 import ScrollToTop from "./components/ScrollToTop";
 import useDynamicTitle from './hooks/useDynamicTitle'
 import PrivacyPolicy from "./components/Footer/Privacy_Policy/Privacy_Policy";
+import Header from './components/Header/Header'
 function App() {
     useDynamicTitle()
   return (
     <>
       <ScrollToTop />
+      <Header />
       <Routes>
         <Route path="/" element={<LandingPage />}></Route>
         <Route path="/faq" element={<Faq />}></Route>

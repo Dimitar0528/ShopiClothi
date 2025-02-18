@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-* {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -12,6 +14,7 @@
   --primary-clr-900: hsl(0, 0%, 0%);
   --accent-clr-100: hsl(220, 14%, 96%);
   --accent-clr-200: hsl(223, 9%, 85%);
+  --accent-clr-300: hsl(223, 9%, 74%);
   --accent-clr-900: hsl(223, 9%, 15%);
   --secondary-clr-purple: hsl(262, 53%, 50%);
   --secondary-clr-red: hsl(350, 82%, 52%);
@@ -20,6 +23,35 @@
 html {
   font-family: 'Poppins', sans-serif;
 }
+
+
+/* Custom Scrollbar- Works in  Chrome, Edge, Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--primary-clr-900);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--primary-clr-100);
+  border-radius: 20px;
+  border: 3px solid var(--accent-clr-200);
+}
+*::-webkit-scrollbar-thumb:hover{
+  background-color: var(--accent-clr-300);
+}
+
+/*Custom Scrollbar- Works in Firefox */
+@supports (scrollbar-width: thin) and (not (-webkit-appearance: none)) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-clr-100) var(--primary-clr-900);
+  }
+}
+
+
 
 a {
   text-decoration: none;
