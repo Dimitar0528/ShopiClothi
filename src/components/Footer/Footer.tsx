@@ -1,5 +1,5 @@
-import React from "react";
-import "./Footer.css"; // Assuming your CSS is saved in this file
+import { Link } from "react-router";
+import "./Footer.css"; 
 const year = new Date().getFullYear();
 export default function Footer (){
   return (
@@ -10,16 +10,16 @@ export default function Footer (){
             <h4>Company</h4>
             <ul>
               <li>
-                <a href="#">About Us</a>
+                <Link to="/about-us">About Us</Link>
               </li>
               <li>
-                <a href="#">Our Services</a>
+                <Link to="/contact-us">Contact Us</Link>
               </li>
               <li>
-                <a href="#">Contact Us</a>
+                <Link to="/privacy-policy">Privacy Policy</Link>
               </li>
               <li>
-                <a href="#">Privacy Policy</a>
+                <Link to="/terms-of-service">Terms Of Service</Link>
               </li>
             </ul>
           </div>
@@ -28,34 +28,34 @@ export default function Footer (){
             <h4>Get Help</h4>
             <ul>
               <li>
-                <a href="#">FAQ</a>
+                <Link to="/faq">FAQ</Link>
               </li>
               <li>
-                <a href="#">Shipping</a>
+                <Link to="/shipping">Shipping</Link>
               </li>
               <li>
-                <a href="#">Returns</a>
+                <Link to="/returns">Returns</Link>
               </li>
               <li>
-                <a href="#">Order Status</a>
+                <Link to="/order-status">Order Status</Link>
               </li>
             </ul>
           </div>
 
           <div className="footer-col">
-            <h4>Online Shop</h4>
+            <h4>Categories</h4>
             <ul>
               <li>
-                <a href="#">Watch</a>
+                <Link to="/watch">Watch</Link>
               </li>
               <li>
-                <a href="#">Bag</a>
+                <Link to="/bag">Bag</Link>
               </li>
               <li>
-                <a href="#">Shoes</a>
+                <Link to="/shoes">Shoes</Link>
               </li>
               <li>
-                <a href="#">Dress</a>
+                <Link to="/dress">Dress</Link>
               </li>
             </ul>
           </div>
@@ -115,12 +115,13 @@ export default function Footer (){
         </div>
       </div>
       <div className="copyright">
-          <p class="copyright-text">
-            Copyright &copy; {year} {" "}
-            <a href="/">
-              ShopiClothi.netlify.app
-            </a>
-          </p>
+        <p className="copyright-text">
+          Copyright &copy; {year}{" "}
+          <Link className="origin-link" to="/">
+            shopiclothi.netlify.app
+          </Link>
+          . All rights reserved.
+        </p>
       </div>
     </footer>
   );

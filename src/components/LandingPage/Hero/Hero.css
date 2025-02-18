@@ -1,0 +1,107 @@
+.hero {
+  padding-bottom: 4rem;
+  position: relative;
+
+  background-image: linear-gradient(
+    rgba(34, 34, 34, 0.65),
+    rgba(34, 34, 34, 0.65)
+  ), url("https://3dlook.ai/wp-content/uploads/2023/03/fashion-ecommerce-in-2023_-the-retailers-handbook-_v1-1.jpg");
+  background-size: cover;
+  color: var(--primary-clr-100)
+}
+.hero-content{
+    padding-top: clamp(2rem, 100%, 11.5vw);
+}
+@keyframes background-pan {
+  from {
+    background-position: 0% center;
+  }
+
+  to {
+    background-position: -200% center;
+  }
+}
+.heading {
+    background-color: hsl(from var(--primary-clr-100) h s l /.75);
+    display: inline-block;
+    margin-top: 2rem;
+    padding:0 .5rem;
+    border-radius: .5rem;
+    margin-inline: 1rem;
+    @media (width <450px){
+      padding: 0;
+    }
+}
+.hero-content-inner{
+    text-align: center;
+    & h1{
+      --purple: rgb(123, 31, 152);
+      --violet: rgb(103, 58, 183);
+      --pink: rgb(244, 143, 147);
+        font-size: 3.25rem;
+        line-height: 1.3;
+        animation: background-pan 8s linear infinite;
+          font-weight: 900;
+          background: linear-gradient(to right,
+              var(--purple),
+              var(--violet),
+              var(--pink),
+              var(--purple));
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-size: 200%;
+    }
+    & p {
+        margin-top: 1.5rem;
+        font-size: 1.25rem;
+        line-height: 1.6;
+        margin-bottom: 3rem;
+        padding-inline: .25rem;
+        max-width: 70ch;
+        margin-inline: auto;
+        & span{
+          font-weight: bold;
+          font-style: italic;
+          text-decoration: underline;
+          text-underline-offset: 6px;
+        }
+    }
+    
+    .btn {
+        font-size: 1.25rem;
+        font-weight: 600;
+        background-color: var(--primary-clr-100);
+        color: #fff;
+        text-decoration: none;
+        display: inline-block;
+        padding: 1rem 2rem;
+        border-radius: .5rem;
+        color: black;
+        border: 1px solid var(--primary-clr-100);
+        transition: .25s;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        
+          &::before {
+            content: "";
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-clr-900);
+            transition: top 0.3s ease-in-out;
+            z-index: -1;
+          }
+        
+          &:where(:hover, :focus-visible) {
+            color: var(--primary-clr-100);
+            border: 1px solid var(--primary-clr-100);
+          }
+        
+          &:where(:hover, :focus-visible)::before {
+            top: 0;
+          }
+    }
+}

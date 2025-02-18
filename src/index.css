@@ -1,61 +1,61 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-:root {
-  font-family: "Poppins", system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #ffffff;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #000000b7;
-  text-decoration: inherit;
- 
-  
-}
-a:hover {
- color: inherit;
- text-decoration: underline;
- transform: scale(1.075);
- transition: transform 0.001s ease-in-out;
- 
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  width: 100%;
-  height: 115px;
-  
-}
-
-#root {
-  width: 100%;
-  height: 100%;
-  
-  text-align: center;
-}
-
-
-* {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-:root{
+:root {
   --primary-clr-100: hsl(0, 0%, 100%);
+  --primary-clr-200: hsl(0, 0%, 73%);
   --primary-clr-900: hsl(0, 0%, 0%);
   --accent-clr-100: hsl(220, 14%, 96%);
+  --accent-clr-200: hsl(223, 9%, 85%);
+  --accent-clr-300: hsl(223, 9%, 74%);
   --accent-clr-900: hsl(223, 9%, 15%);
-  --secondary-clr-purple: hsl(275, 86%, 36%);
+  --secondary-clr-purple: hsl(262, 53%, 50%);
+  --secondary-clr-red: hsl(350, 82%, 52%);
+}
+
+html {
+  font-family: 'Poppins', sans-serif;
+}
+
+
+/* Custom Scrollbar- Works in  Chrome, Edge, Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--primary-clr-900);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--primary-clr-100);
+  border-radius: 20px;
+  border: 3px solid var(--accent-clr-200);
+}
+*::-webkit-scrollbar-thumb:hover{
+  background-color: var(--accent-clr-300);
+}
+
+/*Custom Scrollbar- Works in Firefox */
+@supports (scrollbar-width: thin) and (not (-webkit-appearance: none)) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-clr-100) var(--primary-clr-900);
+  }
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-clr-900);
+}
+
+input,textarea{
+  caret-color: var(--secondary-clr-purple);
 }
