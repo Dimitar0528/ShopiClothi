@@ -6,6 +6,7 @@ import search from '../../assets/search.svg';
 import ShopiClothiLogo from '../../assets/ShpoCloti-Logo.svg';
 import menuIcon from '../../assets/menu-icon.svg';
 import closeIcon from '../../assets/close-icon.png';
+import { Link }   from 'react-router';
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
@@ -20,7 +21,7 @@ export default function Header() {
                 <nav className="navbar">
                     <ul className={`nav-links ${isOpen ? 'open' : ''}`}>
                         <li className="profile-icon">
-                            <a href="Profile"><img src={profilePic} alt="profile" width='32' /></a>
+                            <Link to="/profile"><img src={profilePic} alt="profile" width='32' /></Link >
                         </li>
                         <li>
                             <a href="#home">Home</a>
