@@ -1,0 +1,79 @@
+.sign-up-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f5f5;
+}
+
+.sign-up--container {
+    background-color: white;
+    padding: 40px; /* Increased padding */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px; /* Increased width */
+}
+
+.sign-up-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sign-up-form--title {
+    display: block;
+    font-size: 32px; /* Increased font size */
+    margin-bottom: 30px; /* Increased margin */
+}
+
+.sign-up-form--info--container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.sign-up-form--input {
+    margin-bottom: 15px; /* Increased margin */
+    padding: 15px; /* Increased padding */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 18px; /* Increased font size */
+}
+
+.sign-up-form--button {
+    margin-top: 30px; /* Increased margin */
+    padding: 15px 30px; /* Increased padding */
+    border: none;
+    border-radius: 4px;
+    background-color: #000000;
+    color: white;
+    font-size: 18px; /* Increased font size */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.sign-up-form--button:hover {
+    background-color: white;
+    color: #000;
+}
+.login--text {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #000000;
+}
+.login--link {
+    margin-top: 3px;
+    font-size: 14px;
+    color: #000000;
+    text-decoration: underline;
+}
+.login--link:hover {
+    font-weight: bold; /* Change font weight to bold */
+    transition: ease-in-out 0.3s;
+    color: inherit; /* Change color to red */
+    font-size: 14px; /* Increase font size */
+
+}
