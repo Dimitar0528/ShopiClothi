@@ -1,49 +1,88 @@
 import { useState } from "react";
-import './Header.css';
-import shoppingBag from '../../assets/bags-shopping.svg';
-import profilePic from '../../assets/circle-user.svg';
-import search from '../../assets/search.svg';
-import ShopiClothiLogo from '../../assets/ShpoCloti-Logo.svg';
-import menuIcon from '../../assets/menu-icon.svg';
-import closeIcon from '../../assets/close-icon.png';
-import { Link }   from 'react-router';
+import "./Header.css";
+import shoppingBag from "/src/assets/bags-shopping.svg";
+import profilePic from "/src/assets/circle-user.svg";
+import search from "/src/assets/search.svg";
+import ShopiClothiLogo from "/src/assets/ShopiClothi_Logo.svg";
+import menuIcon from "/src/assets/menu-icon.svg";
+import closeIcon from "/src/assets/close-icon.png";
+import { NavLink } from "react-router";
 
 export default function Header() {
-    const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-    const toggleMenu = () => {
-        setIsOpen(!isOpen);
-    };
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
 
-    return (
-        <header className='header-wrapper'>
-            <div className='header-content'>
-                <nav className="navbar">
-                    <ul className={`nav-links ${isOpen ? 'open' : ''}`}>
-                        <li className="profile-icon">
-                            <Link to="/profile"><img src={profilePic} alt="profile" width='32' /></Link >
-                        </li>
-                        <li>
-                            <a href="#home">Home</a>
-                        </li>
-                        <li>
-                            <a href="#catalog">Catalog</a>
-                        </li>
-                        <li>
-                            <a href="#contact">Contact</a>
-                        </li>
-                    </ul>
-                    <button className="menu-toggle" onClick={toggleMenu}>
-                        <img src={isOpen ? closeIcon : menuIcon} alt="Menu Icon" width='32' />
-                    </button>
-                </nav>
-                <img src={ShopiClothiLogo} alt="ShopiClothi Logo" width='100' className="Logo" />
-                <ul className='icons'>
-                    <li><a href='Profile'><img src={profilePic} alt="profile" width='34' className={`profile ${isOpen ? 'open' : ''}`} /></a></li>
-                    <li><a href='Shopping bag'><img src={shoppingBag} alt="shopping bag" width='34' className="shopping-bag" /></a></li>
-                    <li><a href='Search'><img src={search} alt="search" width='34' className="search" /></a></li>
-                </ul>
-            </div>
-        </header>
-    );
+  return (
+    <header className="header-wrapper">
+      {/* Skip to main content link */}
+      <a href="#main-content" className="skip-to-main-content">
+        Skip to main content
+      </a>
+
+      <div className="left-border-styling"></div>
+      <div className="header-content">
+        <nav className="navbar">
+          <ul className={`nav-links ${isOpen ? "open" : ""}`}>
+            <li className="profile-icon">
+              <NavLink to="/profile">
+                <img src={profilePic} alt="profile" width="32" />
+              </NavLink>
+            </li>
+            <li>
+              <NavLink className='nav-link' to="/">Home</NavLink>
+            </li>
+            <li>
+              <NavLink className='nav-link' to="/catalog">Catalog</NavLink>
+            </li>
+            <li>
+              <NavLink className='nav-link' to="/contact">Contact</NavLink>
+            </li>
+          </ul>
+          <button className="menu-toggle" onClick={toggleMenu}>
+            <img
+              src={isOpen ? closeIcon : menuIcon}
+              alt="Menu Icon"
+              width="32"
+            />
+          </button>
+        </nav>
+        <img
+          src={ShopiClothiLogo}
+          alt="ShopiClothi Logo"
+          width="100"
+          className="Logo"
+        />
+        <ul className="icons">
+          <li>
+            <NavLink to="/profile">
+              <img
+                src={profilePic}
+                alt="profile"
+                width="34"
+                className={`profile ${isOpen ? "open" : ""}`}
+              />
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/shopping-bag">
+              <img
+                src={shoppingBag}
+                alt="shopping bag"
+                width="34"
+                className="shopping-bag"
+              />
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/search">
+              <img src={search} alt="search" width="34" className="search" />
+            </NavLink>
+          </li>
+        </ul>
+      </div>
+    </header>
+  );
 }

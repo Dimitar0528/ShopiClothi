@@ -2,9 +2,9 @@
     width: min(90%,78vw);
     margin: 0 auto;
     padding: 2rem;
-    font-family: Arial, sans-serif;
     line-height: 1.6;
     background-color: var(--accent-clr-200);
+    border-radius: 1rem;
 }
 
 .heading {
