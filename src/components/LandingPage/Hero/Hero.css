@@ -48,6 +48,7 @@
               var(--pink),
               var(--purple));
           -webkit-background-clip: text;
+          background-clip: text;
           -webkit-text-fill-color: transparent;
           background-size: 200%;
     }

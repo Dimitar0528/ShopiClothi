@@ -140,18 +140,69 @@
     list-style: none;
 }
 
-.header-wrapper a {
+
+.header-wrapper a:not(.skip-to-main-content) {
     font-size: 1rem;
     font-weight: 500;
     color: var(--accent-clr-100);
     display: inline-block;
+    position: relative;
+    transition: color 0.25s ease;
+    text-decoration: none;
 }
-.header-wrapper:has(.open) a{
+.nav-links.open a:not(.skip-to-main-content){
     color: var(--primary-clr-900);
 }
-.header-wrapper a:hover {
-    text-decoration: underline;
-    text-underline-offset: .5rem;
-    transform: scale(1.075);
-    transition: transform 0.001s ease-in-out;
+.header-wrapper a:not(.skip-to-main-content)::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    background-color: var(--accent-clr-300);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease-in-out, transform-origin 0s;
+}
+
+/* Underline animation when hovering */
+.header-wrapper a:hover::after,
+.header-wrapper a:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: right;
+}
+
+.header-wrapper a:hover::after,
+.header-wrapper a:focus-visible::after {
+    transform-origin: left;
+}
+
+.header-wrapper a:where(:hover, :focus-visible) {
+    scale: 1.075;
+    outline: transparent;
+}
+
+/* Style the skip link */
+.skip-to-main-content {
+    position: absolute;
+    top: -3rem;
+    padding: 10px;
+    background-color: #000;
+    color: #fff;
+    font-size: 16px;
+    text-decoration: none;
+    z-index: 1000;
+    transition: 0.2s ease;
+    opacity: 0;
+}
+.skip-to-main-content:focus-visible{
+    top: 0;
+    opacity: 1;
+}
+
+.skip-to-main-content:focus-visible {
+    background-color: var(--accent-clr-200);
+    color: var(--primary-clr-900);
+    border: 3px solid var(--accent-clr-300);
 }

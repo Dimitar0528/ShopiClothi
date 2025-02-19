@@ -9,18 +9,19 @@ export default function useDynamicTitle() {
     const location = useLocation();
 
     useEffect(() => {
-        const path = location.pathname
-            .replace(/-/g, " ") // Replace dashes with spaces for readability
-            .replace(/\//g, " ") // Remove slashes
-            .trim();
+      const path = location.pathname
+        .replace(/-/g, " ") // Replace dashes with spaces for readability
+        .replace(/\//g, " ") // Remove slashes
+        .trim();
 
-        const formattedTitle = path
-            ? path
-                .split(" ")
-                .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize words
-                .join(" ")
-            : "Home"; // Default title for root path
+      const formattedTitle = path
+        ? path
+            .split(" ")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize words
+            .join(" ")
+        : "Home"; // Default title for root path
 
-        document.title = `${formattedTitle} - ShopiClothi`;
+      document.title = `${formattedTitle} - ShopiClothi`;
+      window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll to top whenever the path changes
     }, [location.pathname]);
 }
