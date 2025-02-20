@@ -15,7 +15,7 @@ export default function Sign_up_Page() {
                     </div>
                     <button className="sign-up-form--button">Sign Up</button>
                     <p className='login--text'>Have an account?</p>
-                    <Link to="/Profile" className="login--link">Log in</Link>
+                    <Link to="/profile" className="login--link">Log in</Link>
                 </form>
             </div>
         </div>

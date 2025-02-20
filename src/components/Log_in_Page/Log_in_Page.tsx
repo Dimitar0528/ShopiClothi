@@ -13,18 +13,11 @@ import  "./Log_in_Page.css";
                         </div>
                         <button className="login-form--button">Log in</button>
                         <p className="login-form--text">Don't have an account? </p>
-                        <Link to="/sign_up" className="signup--link">Sign up</Link>
+                        <Link to="/sign-up" className="signup--link">Sign up</Link>
                 </form>
 
             </div>
-           
-            
-
-
-
-
-
-         </div>
+        </div>
 
 
 

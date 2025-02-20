@@ -24,7 +24,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/profile" element={<Log_in_Page />} />
-          <Route path="/sign_up" element={<Sign_up_Page />} />
+          <Route path="/sign-up" element={<Sign_up_Page />} />
           <Route path="/faq" element={<Faq />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />

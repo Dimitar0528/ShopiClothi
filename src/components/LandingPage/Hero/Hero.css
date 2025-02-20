@@ -34,24 +34,34 @@
 }
 .hero-content-inner{
     text-align: center;
-    & h1{
-      --purple: rgb(123, 31, 152);
-      --violet: rgb(103, 58, 183);
-      --pink: rgb(244, 143, 147);
+    & h1 {
+        --purple: rgb(123, 31, 152);
+        --violet: rgb(103, 58, 183);
+        --pink: rgb(244, 143, 147);
+    
         font-size: 3.25rem;
         line-height: 1.3;
+        font-weight: 900;
         animation: background-pan 8s linear infinite;
-          font-weight: 900;
-          background: linear-gradient(to right,
-              var(--purple),
-              var(--violet),
-              var(--pink),
-              var(--purple));
-          -webkit-background-clip: text;
-          background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-size: 200%;
-    }
+    
+        background: linear-gradient(to right,
+            var(--purple),
+            var(--violet),
+            var(--pink),
+            var(--purple));
+        background-size: 200%;
+    
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    
+    & h1::selection {
+        background-color: hsl(from var(--accent-clr-300) h s l / .3);
+          color: var(--primary-clr-100);
+     }
+    
+     
     & p {
         margin-top: 1.5rem;
         font-size: 1.25rem;

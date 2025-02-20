@@ -18,8 +18,13 @@
   --accent-clr-900: hsl(223, 9%, 15%);
   --secondary-clr-purple: hsl(262, 53%, 50%);
   --secondary-clr-red: hsl(350, 82%, 52%);
+  --selection-bg-clr: hsl(220, 10%, 65%);
 }
 
+::selection{
+  background-color: var(--selection-bg-clr);
+  color: var(--primary-clr-900);
+}
 html {
   font-family: 'Poppins', sans-serif;
 }
