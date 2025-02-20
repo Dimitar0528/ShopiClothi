@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "./Faq.module.css";
+import styles from './FAQ.module.css'
 
 export default function Faq() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
