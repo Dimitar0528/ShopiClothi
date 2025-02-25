@@ -22,6 +22,6 @@ export default function useDynamicTitle() {
         : "Home"; // Default title for root path
 
       document.title = `${formattedTitle} - ShopiClothi`;
-      window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll to top whenever the path changes
+      window.scrollTo({ top: 0 }); // Scroll to top whenever the path changes
     }, [location.pathname]);
 }

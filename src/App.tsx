@@ -9,6 +9,7 @@ import Header from "./components/Header/Header";
 import TermsOfService from "./components/Footer/Terms_Of_Service/Terms_Of_Service";
 import Log_in_Page from "./components/Log_in_Page/Log_in_Page";
 import Sign_up_Page from "./components/Sign_up_Page/Sign_up_Page";
+import ScrollToTopButton from "./components/ScrollToTopButton/ScrollToTopButton";
 
 function App() {
   useDynamicTitle();
@@ -19,6 +20,7 @@ function App() {
 
   return (
     <>
+    <ScrollToTopButton />
       <Header />
       <div id="main-content">
         <Routes>

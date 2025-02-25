@@ -15,9 +15,9 @@ export default function Hero() {
               second-hand clothes to update your look. Curated to match your
               unique style while keeping the planet in mind.
             </p>
-            <Link to='#newest' className="btn">
+            <a href='#newest' className="btn">
               <span>Start dressing well</span>
-            </Link>
+            </a>
           </div>
         </div>
       </div>

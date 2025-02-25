@@ -206,3 +206,10 @@
     color: var(--primary-clr-900);
     border: 3px solid var(--accent-clr-300);
 }
+
+
+.search-btn{
+    border: transparent;
+    background-color: transparent;
+    cursor: pointer;
+}
