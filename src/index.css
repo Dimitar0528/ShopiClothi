@@ -9,6 +9,8 @@
 }
 
 :root {
+  scroll-behavior: smooth;
+  scroll-padding: 7rem;
   --primary-clr-100: hsl(0, 0%, 100%);
   --primary-clr-200: hsl(0, 0%, 73%);
   --primary-clr-900: hsl(0, 0%, 0%);
@@ -63,4 +65,11 @@ a {
 
 input,textarea{
   caret-color: var(--secondary-clr-purple);
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+  gap: 2rem;
+  padding: 1.25rem;
 }

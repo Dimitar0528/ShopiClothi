@@ -77,9 +77,9 @@ export default function Header() {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/search">
+            <button className="search-btn">
               <img src={search} alt="search" width="34" className="search" />
-            </NavLink>
+            </button>
           </li>
         </ul>
       </div>
