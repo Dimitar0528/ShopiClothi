@@ -4,7 +4,7 @@ const year = new Date().getFullYear();
 export default function Footer (){
   return (
     <footer className="footer">
-      <div className="container">
+      <div className="footer-container">
         <div className="row">
           <div className="footer-col">
             <h4>Company</h4>

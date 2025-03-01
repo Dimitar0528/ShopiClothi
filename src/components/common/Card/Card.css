@@ -33,9 +33,7 @@
     height: 310px;
     overflow: hidden;
 
-    @media (width < 740px) {
-        width: 70vw;
-    }
+   
 }
 
 .container .card .img-container img {
@@ -54,11 +52,15 @@
     padding: 10px;
 }
 
-.container .card .content .productName h3 {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--accent-clr-900);
-    margin: .5rem 0;
+.container .card .content .productName {
+    --_lines-of-text: 3;
+    display: -webkit-box;
+    -webkit-line-clamp: var(--_lines-of-text);
+    line-clamp: var(--_lines-of-text);
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
 }
 
 .container .card .content .price-rating {

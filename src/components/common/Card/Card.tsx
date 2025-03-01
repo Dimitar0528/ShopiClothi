@@ -1,11 +1,12 @@
 import { useEffect, useRef } from "react";
 import { Link } from "react-router";
 import "./Card.css";
-import { Product } from "../../types/api";
+import { Product } from "../../../types/api";
 export default function Card({ image, title, price, rating, id }: Product) {
   const cardRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
+    // use IntersectionObserver for scroll-based animations
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -14,7 +15,7 @@ export default function Card({ image, title, price, rating, id }: Product) {
           }
         });
       },
-      { threshold: 0.2 } // Sensitivity of the trigger
+      { threshold: 0.15 } // Sensitivity of the trigger
     );
 
     const cardElement = cardRef.current;
@@ -66,7 +67,7 @@ export default function Card({ image, title, price, rating, id }: Product) {
 
         <div className="price-rating">
           <h2>{price}$</h2>
-          <div className="rating">{renderStars(rating)}</div>
+          <div className="rating">{renderStars(rating.rate)}</div>
         </div>
       </div>
     </Link>
