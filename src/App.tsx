@@ -10,6 +10,8 @@ import TermsOfService from "./components/layout/Footer/Terms_Of_Service/Terms_Of
 import Log_in_Page from "./components/authentication/Log_in_Page/Log_in_Page";
 import Sign_up_Page from "./components/authentication/Sign_up_Page/Sign_up_Page";
 import ScrollToTopButton from "./components/ui/ScrollToTopButton/ScrollToTopButton";
+import ShoppingBag from "./components/ShoppingBag/ShoppingBag";
+import ProductDetail from "./components/ProductDetail/ProductDetail";
 
 function App() {
   useDynamicTitle();
@@ -18,15 +20,23 @@ function App() {
   // Define the paths where we don't want to show the Newsletter
   const hideNewsletterRoutes = ["/profile", "/sign_up"];
 
+  const shouldHideNewsletter = () => {
+    return hideNewsletterRoutes.some((route) =>
+      location.pathname.startsWith(route)
+    );
+  };
+
   return (
     <>
-    <ScrollToTopButton />
+      <ScrollToTopButton />
       <Header />
       <div id="main-content">
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/profile" element={<Log_in_Page />} />
           <Route path="/sign-up" element={<Sign_up_Page />} />
+          <Route path="/shopping-bag" element={<ShoppingBag />} />
+          <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/faq" element={<Faq />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
@@ -34,7 +44,7 @@ function App() {
         </Routes>
 
         {/* Render Newsletter only if the current path is NOT in the hideNewsletterRoutes list */}
-        {!hideNewsletterRoutes.includes(location.pathname) && <Newsletter />}
+        {!shouldHideNewsletter() && <Newsletter />}
       </div>
       <Footer />
     </>

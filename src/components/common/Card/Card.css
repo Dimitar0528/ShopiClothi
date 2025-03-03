@@ -7,14 +7,14 @@
     transition: opacity 0.6s ease-out,
         transform 0.6s ease-out,
         translate .4s, box-shadow .4s;
-    box-shadow: 0 4px 8px 0 hsla(0 0% 0%/ 0.2);
+    box-shadow: 0 4px .5rem 0 hsla(0 0% 0%/ 0.2);
     border-radius: .25rem;
     position: relative;
 
     &:where(:hover, :focus-within) {
         translate: 0 -3px;
         outline: 1px solid var(--secondary-clr-purple);
-        box-shadow: 0 5px 8px 8px hsla(0 0% 0% / 0.3);
+        box-shadow: 0 5px .5rem .5rem hsla(0 0% 0% / 0.3);
     }
 
     @media (width < 752px) {
@@ -33,7 +33,7 @@
     height: 310px;
     overflow: hidden;
 
-   
+
 }
 
 .container .card .img-container img {
@@ -49,11 +49,11 @@
 }
 
 .container .card .content {
-    padding: 10px;
+    padding: .625rem;
 }
 
 .container .card .content .productName {
-    --_lines-of-text: 3;
+    --_lines-of-text: 2;
     display: -webkit-box;
     -webkit-line-clamp: var(--_lines-of-text);
     line-clamp: var(--_lines-of-text);
@@ -61,6 +61,7 @@
     overflow: hidden;
     word-wrap: break-word;
     text-overflow: ellipsis;
+    font-weight: 400;
 }
 
 .container .card .content .price-rating {
@@ -101,7 +102,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 4px;
+    margin: .25rem;
     cursor: pointer;
     transition: 0.5s;
 }
@@ -118,11 +119,21 @@
 .card:where(:hover, :focus-within) .action li {
     transform: translateX(-10px);
 }
-.action li:where(:hover, :focus-visible) {
+
+.action li.active {
+    background-color: var(--active-clr);
+}
+
+.action li.active i {
+    color: var(--primary-clr-100);
+}
+
+.action li:is(:hover, :focus-visible) {
     background: var(--secondary-clr-red);
     color: var(--primary-clr-100);
     outline: transparent;
 }
+
 .action li span {
     position: absolute;
     right: 50px;
@@ -150,8 +161,8 @@
     position: absolute;
     top: 50%;
     right: -4px;
-    width: 8px;
-    height: 8px;
+    width: .5rem;
+    height: .5rem;
     background: var(--primary-clr-100);
     transform: translateY(-50%) rotate(45deg);
 }

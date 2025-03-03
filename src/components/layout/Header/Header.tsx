@@ -7,9 +7,12 @@ import ShopiClothiLogo from "/src/assets/ShopiClothi_Logo.svg";
 import menuIcon from "/src/assets/menu-icon.svg";
 import closeIcon from "/src/assets/close-icon.png";
 import { NavLink } from "react-router";
+import { useShoppingContext } from "../../../contexts/ShoppingContext";
+import AnimatedShoppingItem from "../../common/AnimatedShoppingItem/AnimatedShoppingItem";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const { wishlistCount, cartCount } = useShoppingContext();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -17,6 +20,9 @@ export default function Header() {
 
   return (
     <header className="header-wrapper">
+      {/* Animation component for flying items */}
+      <AnimatedShoppingItem />
+
       {/* Skip to main content link */}
       <a href="#main-content" className="skip-to-main-content">
         Skip to main content
@@ -32,13 +38,19 @@ export default function Header() {
               </NavLink>
             </li>
             <li>
-              <NavLink className='nav-link' to="/">Home</NavLink>
+              <NavLink className="nav-link" to="/">
+                Home
+              </NavLink>
             </li>
             <li>
-              <NavLink className='nav-link' to="/catalog">Catalog</NavLink>
+              <NavLink className="nav-link" to="/catalog">
+                Catalog
+              </NavLink>
             </li>
             <li>
-              <NavLink className='nav-link' to="/contact">Contact</NavLink>
+              <NavLink className="nav-link" to="/contact">
+                Contact
+              </NavLink>
             </li>
           </ul>
           <button className="menu-toggle" onClick={toggleMenu}>
@@ -66,7 +78,7 @@ export default function Header() {
               />
             </NavLink>
           </li>
-          <li>
+          <li className="">
             <NavLink to="/shopping-bag">
               <img
                 src={shoppingBag}
@@ -74,6 +86,14 @@ export default function Header() {
                 width="34"
                 className="shopping-bag"
               />
+              {cartCount > 0 && (
+                <span className="count-badge cart-count">{cartCount}</span>
+              )}
+              {wishlistCount > 0 && (
+                <span className="count-badge wishlist-count">
+                  {wishlistCount}
+                </span>
+              )}
             </NavLink>
           </li>
           <li>

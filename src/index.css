@@ -20,6 +20,7 @@
   --accent-clr-900: hsl(223, 9%, 15%);
   --secondary-clr-purple: hsl(262, 53%, 50%);
   --secondary-clr-red: hsl(350, 82%, 52%);
+  --active-clr: hsl(from var(--secondary-clr-red) h s 35%);
   --selection-bg-clr: hsl(220, 10%, 65%);
 }
 
@@ -72,4 +73,6 @@ input,textarea{
   grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
   gap: 2rem;
   padding: 1.25rem;
+  max-width: 1500px;
+  margin-inline: auto;
 }

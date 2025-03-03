@@ -1,0 +1,49 @@
+.animated-item-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+.animated-item {
+    position: absolute;
+    width: 5rem;
+    height: 5rem;
+    object-fit: contain;
+    transform-origin: center;
+    background-color: var(--primary-clr-100);
+    border-radius: .5rem;
+    box-shadow: 0 .25rem .5rem rgba(0, 0, 0, 0.2);
+    animation: fly-to-cart 1.2s ease forwards;
+}
+
+@keyframes fly-to-cart {
+    0% {
+        opacity: 1;
+        transform: scale(1) translate(var(--start-x), var(--start-y));
+    }
+
+    75% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0.2) translate(var(--end-x));
+    }
+}
+
+/* Custom styling for cart vs wishlist animations */
+.animated-item.cart {
+    --end-x: 350vw;
+    --end-y: 20px;
+}
+
+.animated-item.wishlist {
+    --end-x: 350vw;
+    --end-y: 20px;
+}
