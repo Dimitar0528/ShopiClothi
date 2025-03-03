@@ -10,6 +10,7 @@ export default function Faq() {
 
   return (
     <div className={styles["accordion"]}>
+      <h1>Frequently Asked Questions</h1>
       <div className={styles["accordion-item"]}>
         <div
           onClick={() => toggleAccordion(0)}
