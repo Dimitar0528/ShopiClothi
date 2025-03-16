@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate,useLocation } from "react-router";
+import { useParams, useNavigate, useLocation } from "react-router";
 import { useShoppingContext } from "../../contexts/ShoppingContext";
 import { Product } from "../../types/api";
-import "./ProductDetail.css";
+import "./ProductDetails.css";
 import { RenderProductStars } from "../common/RenderProductStars/RenderProductStars";
+// @ts-expect-error: No type definitions available for this package
+import ImageZoom from "react-image-zooom";
 
-export default function ProductDetail() {
+export default function ProductDetails() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const location = useLocation();
@@ -32,7 +34,12 @@ export default function ProductDetail() {
           throw new Error("Product not found");
         }
         const data: Product = await response.json();
-        setProduct(data);
+        const productsWithStock = {
+          ...data,
+          stock: 28,
+          dateAdded: "2025-03-05T17:09:16.082Z",
+        };
+        setProduct(productsWithStock);
         setError(null);
         document.title = `${data.title} - ShopiClothi`;
       } catch (err) {
@@ -107,8 +114,8 @@ export default function ProductDetail() {
       </button>
 
       <div className="product-detail-content">
-        <div className="product-detail-image">
-          <img src={product.image} alt={product.title} />
+        <div title="Click to zoom image" className="product-detail-image">
+          <ImageZoom src={product.image} alt={product.title} zoom="200" />
         </div>
 
         <div className="product-detail-info">
@@ -116,6 +123,19 @@ export default function ProductDetail() {
 
           <div className="product-detail-price-rating">
             <div className="product-detail-price">${product.price}</div>
+            <div
+              className={`product-detail-stock ${
+                product.stock === 0
+                  ? "out-of-stock"
+                  : product.stock <= 10
+                  ? "low-stock"
+                  : ""
+              }`}>
+              {product.stock === 0
+                ? "Out of stock"
+                : `${product.stock} in stock`}
+            </div>
+
             <div className="product-detail-rating">
               {RenderProductStars(product.rating.rate)}
               <span className="rating-count">({product.rating.rate})</span>
@@ -146,9 +166,14 @@ export default function ProductDetail() {
               className={`action-button cart ${
                 isInCart(product.id) ? "active" : ""
               }`}
-              onClick={handleCartToggle}>
+              onClick={handleCartToggle}
+              disabled={product.stock === 0}>
               <i className="fa fa-shopping-cart" aria-hidden="true"></i>
-              {isInCart(product.id) ? "Remove from Cart" : "Add to Cart"}
+              {product.stock === 0
+                ? "Out of Stock"
+                : isInCart(product.id)
+                ? "Remove from Cart"
+                : "Add to Cart"}
             </button>
           </div>
         </div>
