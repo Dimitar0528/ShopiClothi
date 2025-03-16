@@ -166,3 +166,23 @@
     background: var(--primary-clr-100);
     transform: translateY(-50%) rotate(45deg);
 }
+
+.product-labels {
+    position: absolute;
+    top: .5rem;
+    left: .5rem;
+    display: flex;
+    align-items: start;
+    gap: 5px;
+    z-index: 2;
+}
+
+.product-label {
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

@@ -13,8 +13,15 @@ export default function LandingPage() {
         const response = await fetch(
           "https://fakestoreapi.com/products/category/men's clothing"
         );
-        const products: Product[] = await response.json();
-        setProducts((prevProducts) => [...prevProducts, ...products]);
+        const fetchedProducts: Product[] = await response.json();
+        // Add stock and dateAdded to each product
+        const productsWithStock = fetchedProducts.map((product) => ({
+          ...product,
+          stock: 28,
+          dateAdded:"2025-03-16T17:24:30.833Z"
+        }));
+
+        setProducts(productsWithStock);
       } catch (e) {
         console.error(e);
       }
@@ -29,15 +36,7 @@ export default function LandingPage() {
         <h2 className="newest">Newest Products</h2>
         <div className="container">
           {products.map((product: Product) => (
-            <Card
-              id={product.id}
-              key={product.id}
-              image={product.image}
-              title={product.title}
-              description={product.description}
-              price={product.price}
-              rating={product.rating}
-            />
+            <Card key={product.id} {...product} />
           ))}
         </div>
       </div>

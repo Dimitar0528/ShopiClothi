@@ -11,7 +11,7 @@
 .header-content {
     display: flex;
     align-items: center;
-    padding: 20px 30px;
+    padding: .85rem 30px;
     width: 100%;
     max-width: 1000px;
     justify-content: space-between;
@@ -83,7 +83,7 @@
 
     .nav-links.open {
         display: flex;
-        margin-top: 1rem;
+        margin-top: .5rem;
     }
 
     .menu-toggle {

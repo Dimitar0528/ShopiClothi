@@ -4,76 +4,106 @@ import { Product } from "./api";
  * Represents the shape of the shopping React context, managing wishlist and cart functionality.
  */
 
+/**
+ * Represents the structure of the shopping context state and actions.
+ */
 export type ShoppingContextType = {
-  /** List of products in the wishlist */
+  /** List of products added to the wishlist */
   wishlist: Product[];
 
-  /** List of products in the cart */
-  cart: Product[];
+  /** List of items added to the cart, including quantity */
+  cart: CartItem[];
 
   /**
    * Adds a product to the wishlist.
-   * @param product - The product to add.
+   * @param product - The product to be added.
    */
   addToWishlist: (product: Product) => void;
 
   /**
    * Adds a product to the cart.
-   * @param product - The product to add.
+   * @param product - The product to be added.
+   * @param quantity - Optional quantity of the product (defaults to 1).
    */
-  addToCart: (product: Product) => void;
+  addToCart: (product: Product, quantity?: number) => void;
 
   /**
-   * Removes a product from the wishlist by its ID.
-   * @param productId - The ID of the product to remove.
+   * Removes a product from the wishlist.
+   * @param productId - The ID of the product to be removed.
    */
   removeFromWishlist: (productId: number) => void;
 
   /**
-   * Removes a product from the cart by its ID.
-   * @param productId - The ID of the product to remove.
+   * Removes a product from the cart.
+   * @param productId - The ID of the product to be removed.
    */
   removeFromCart: (productId: number) => void;
 
   /**
+   * Updates the quantity of a product in the cart.
+   * @param productId - The ID of the product to update.
+   * @param quantity - The new quantity of the product.
+   */
+  updateCartQuantity: (productId: number, quantity: number) => void;
+
+  /**
    * Checks if a product is in the wishlist.
-   * @param productId - The ID of the product.
+   * @param productId - The ID of the product to check.
    * @returns `true` if the product is in the wishlist, otherwise `false`.
    */
   isInWishlist: (productId: number) => boolean;
 
   /**
    * Checks if a product is in the cart.
-   * @param productId - The ID of the product.
+   * @param productId - The ID of the product to check.
    * @returns `true` if the product is in the cart, otherwise `false`.
    */
   isInCart: (productId: number) => boolean;
 
-  /** The total number of products in the wishlist */
+  /**
+   * Retrieves the quantity of a specific product in the cart.
+   * @param productId - The ID of the product.
+   * @returns The quantity of the product in the cart.
+   */
+  getCartItemQuantity: (productId: number) => number;
+
+  /** The total number of items in the wishlist */
   wishlistCount: number;
 
-  /** The total number of products in the cart */
+  /** The total number of items in the cart */
   cartCount: number;
 
   /**
-   * Triggers an animation when a product is added to the wishlist or cart.
+   * Triggers an animation when adding/removing a product from the wishlist or cart.
    * @param product - The product being animated.
-   * @param type - The type of animation (`"wishlist"` or `"cart"`).
+   * @param type - The type of action triggering the animation ("wishlist" or "cart").
    */
   triggerAnimation: (product: Product, type: "wishlist" | "cart") => void;
 
   /**
-   * Stores the product currently being animated and its type.
+   * Stores the product currently being animated.
    */
   animatingProduct: {
-    /** The product being animated (or `null` if none) */
     product: Product | null;
-
-    /** The type of animation (`"wishlist"` or `"cart"`, or `null` if none) */
     type: "wishlist" | "cart" | null;
   };
 };
 
+/**
+ * Props for the ShoppingProvider component.
+ */
 export type ShoppingProviderProps = {
+  /** Child components to be wrapped by the provider */
   children: ReactNode;
+};
+
+/**
+ * Represents an item in the cart, including product details and quantity.
+ */
+export type CartItem = {
+  /** The product associated with the cart item */
+  product: Product;
+
+  /** The quantity of the product in the cart */
+  quantity: number;
 };
