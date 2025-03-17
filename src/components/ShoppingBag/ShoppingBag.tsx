@@ -12,7 +12,6 @@ export default function ShoppingBag() {
     removeFromWishlist,
     addToWishlist,
     addToCart,
-    updateCartQuantity,
     isInWishlist,
     isInCart,
     triggerAnimation,
@@ -36,12 +35,6 @@ export default function ShoppingBag() {
       addToCart(item);
       triggerAnimation(item, "cart");
     }
-  };
-
-  // Handle quantity change
-  const handleQuantityChange = (item: Product, newQuantity: number) => {
-    if (newQuantity < 1 || newQuantity > item.stock) return;
-    updateCartQuantity(item.id, newQuantity);
   };
 
   // Handle setting the active tab (cart or wishlist)
@@ -86,33 +79,6 @@ export default function ShoppingBag() {
                     <div className="item-details">
                       <h3>{cartItem.product.title}</h3>
                       <p className="price">${cartItem.product.price}</p>
-                      <div className="quantity-controls">
-                        <button
-                          className="quantity-btn"
-                          onClick={() =>
-                            handleQuantityChange(
-                              cartItem.product,
-                              cartItem.quantity - 1
-                            )
-                          }
-                          disabled={cartItem.quantity <= 1}>
-                          -
-                        </button>
-                        <span className="quantity">{cartItem.quantity}</span>
-                        <button
-                          className="quantity-btn"
-                          onClick={() =>
-                            handleQuantityChange(
-                              cartItem.product,
-                              cartItem.quantity + 1
-                            )
-                          }
-                          disabled={
-                            cartItem.quantity >= cartItem.product.stock
-                          }>
-                          +
-                        </button>
-                      </div>
                       <div className="button-group">
                         <button
                           className="remove-btn"

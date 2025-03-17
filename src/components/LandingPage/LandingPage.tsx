@@ -17,7 +17,7 @@ export default function LandingPage() {
         // Add stock and dateAdded to each product
         const productsWithStock = fetchedProducts.map((product) => ({
           ...product,
-          stock: 28,
+          stock: 1,
           dateAdded:"2025-03-16T17:24:30.833Z"
         }));
 

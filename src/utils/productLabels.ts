@@ -23,18 +23,6 @@ export function getProductLabels(product: Product): ProductLabel[] {
       type: "out-of-stock",
       color: "var(--secondary-clr-red)",
     });
-  } else if (product.stock <= 10) {
-    labels.push({
-      text: `LOW STOCK - Only ${product.stock} left`,
-      type: "low-stock",
-      color: "var(--accent-clr-900)",
-    });
-  } else {
-    labels.push({
-      text: "IN STOCK",
-      type: "in-stock",
-      color: "var(--accent-clr-900)",
-    });
   }
 
   // Add any additional labels here (e.g., sale, trending, etc.)

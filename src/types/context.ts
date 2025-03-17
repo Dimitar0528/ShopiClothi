@@ -40,13 +40,6 @@ export type ShoppingContextType = {
   removeFromCart: (productId: number) => void;
 
   /**
-   * Updates the quantity of a product in the cart.
-   * @param productId - The ID of the product to update.
-   * @param quantity - The new quantity of the product.
-   */
-  updateCartQuantity: (productId: number, quantity: number) => void;
-
-  /**
    * Checks if a product is in the wishlist.
    * @param productId - The ID of the product to check.
    * @returns `true` if the product is in the wishlist, otherwise `false`.

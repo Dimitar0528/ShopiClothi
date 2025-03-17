@@ -36,7 +36,7 @@ export default function ProductDetails() {
         const data: Product = await response.json();
         const productsWithStock = {
           ...data,
-          stock: 28,
+          stock: 1,
           dateAdded: "2025-03-05T17:09:16.082Z",
         };
         setProduct(productsWithStock);
@@ -124,16 +124,10 @@ export default function ProductDetails() {
           <div className="product-detail-price-rating">
             <div className="product-detail-price">${product.price}</div>
             <div
-              className={`product-detail-stock ${
-                product.stock === 0
-                  ? "out-of-stock"
-                  : product.stock <= 10
-                  ? "low-stock"
-                  : ""
-              }`}>
+              className={`product-detail-stock`}>
               {product.stock === 0
                 ? "Out of stock"
-                : `${product.stock} in stock`}
+                : `In stock`}
             </div>
 
             <div className="product-detail-rating">

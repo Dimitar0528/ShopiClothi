@@ -60,59 +60,31 @@ export const ShoppingProvider = ({ children }: ShoppingProviderProps) => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  const addToWishlist = (product: Product) => {
-    if (!isInWishlist(product.id)) {
-      setWishlist((prev) => [...prev, product]);
-    }
-  };
+ const addToWishlist = (product: Product) => {
+   if (!isInWishlist(product.id)) {
+     setWishlist((prev) => [...prev, product]);
+   }
+ };
 
-  const addToCart = (product: Product, quantity: number = 1) => {
-    if (product.stock === 0) return; // Don't add if out of stock
+ const addToCart = (product: Product) => {
+   if (product.stock === 0) return; // Don't add if out of stock
 
-    setCart((prev) => {
-      const existingItem = prev.find((item) => item.product.id === product.id);
+   setCart((prev) => {
+     const exists = prev.some((item) => item.product.id === product.id);
+     if (exists) return prev; // Prevent duplicates
 
-      if (existingItem) {
-        // Check if adding quantity would exceed stock
-        const newQuantity = existingItem.quantity + quantity;
-        if (newQuantity > product.stock) return prev;
+     return [...prev, { product, quantity: 1 }];
+   });
+ };
 
-        return prev.map((item) =>
-          item.product.id === product.id
-            ? { ...item, quantity: newQuantity }
-            : item
-        );
-      }
+ const removeFromWishlist = (productId: number) => {
+   setWishlist((prev) => prev.filter((item) => item.id !== productId));
+ };
 
-      // Check if initial quantity would exceed stock
-      if (quantity > product.stock) return prev;
+ const removeFromCart = (productId: number) => {
+   setCart((prev) => prev.filter((item) => item.product.id !== productId));
+ };
 
-      return [...prev, { product, quantity }];
-    });
-  };
-
-  const removeFromWishlist = (productId: number) => {
-    setWishlist((prev) => prev.filter((item) => item.id !== productId));
-  };
-
-  const removeFromCart = (productId: number) => {
-    setCart((prev) => prev.filter((item) => item.product.id !== productId));
-  };
-
-  const updateCartQuantity = (productId: number, quantity: number) => {
-    setCart((prev) => {
-      const item = prev.find((item) => item.product.id === productId);
-      if (!item) return prev;
-
-      // Don't update if quantity would exceed stock
-      if (quantity > item.product.stock) return prev;
-      if (quantity < 1) return prev;
-
-      return prev.map((item) =>
-        item.product.id === productId ? { ...item, quantity } : item
-      );
-    });
-  };
 
   const isInWishlist = (productId: number) => {
     return wishlist.some((item) => item.id === productId);
@@ -143,7 +115,6 @@ export const ShoppingProvider = ({ children }: ShoppingProviderProps) => {
     addToCart,
     removeFromWishlist,
     removeFromCart,
-    updateCartQuantity,
     isInWishlist,
     isInCart,
     getCartItemQuantity,
