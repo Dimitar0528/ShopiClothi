@@ -3,11 +3,14 @@ import {
   useContext,
   useState,
   useEffect,
+  ReactNode,
 } from "react";
 import { Product } from "../types/api";
-import { ShoppingContextType, ShoppingProviderProps } from "../types/context";
+import { ShoppingContextType, CartItem } from "../types/context";
 
-const ShoppingContext = createContext<ShoppingContextType | undefined>(undefined);
+const ShoppingContext = createContext<ShoppingContextType | undefined>(
+  undefined
+);
 
 export const useShoppingContext = () => {
   const context = useContext(ShoppingContext);
@@ -19,9 +22,13 @@ export const useShoppingContext = () => {
   return context;
 };
 
+type ShoppingProviderProps = {
+  children: ReactNode;
+};
+
 export const ShoppingProvider = ({ children }: ShoppingProviderProps) => {
   const [wishlist, setWishlist] = useState<Product[]>([]);
-  const [cart, setCart] = useState<Product[]>([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
   const [animatingProduct, setAnimatingProduct] = useState<{
     product: Product | null;
     type: "wishlist" | "cart" | null;
@@ -53,32 +60,43 @@ export const ShoppingProvider = ({ children }: ShoppingProviderProps) => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  const addToWishlist = (product: Product) => {
-    if (!isInWishlist(product.id)) {
-      setWishlist((prev) => [...prev, product]);
-    }
-  };
+ const addToWishlist = (product: Product) => {
+   if (!isInWishlist(product.id)) {
+     setWishlist((prev) => [...prev, product]);
+   }
+ };
 
-  const addToCart = (product: Product) => {
-    if (!isInCart(product.id)) {
-      setCart((prev) => [...prev, product]);
-    }
-  };
+ const addToCart = (product: Product) => {
+   if (product.stock === 0) return; // Don't add if out of stock
 
-  const removeFromWishlist = (productId: number) => {
-    setWishlist((prev) => prev.filter((item) => item.id !== productId));
-  };
+   setCart((prev) => {
+     const exists = prev.some((item) => item.product.id === product.id);
+     if (exists) return prev; // Prevent duplicates
 
-  const removeFromCart = (productId: number) => {
-    setCart((prev) => prev.filter((item) => item.id !== productId));
-  };
+     return [...prev, { product, quantity: 1 }];
+   });
+ };
+
+ const removeFromWishlist = (productId: number) => {
+   setWishlist((prev) => prev.filter((item) => item.id !== productId));
+ };
+
+ const removeFromCart = (productId: number) => {
+   setCart((prev) => prev.filter((item) => item.product.id !== productId));
+ };
+
 
   const isInWishlist = (productId: number) => {
     return wishlist.some((item) => item.id === productId);
   };
 
   const isInCart = (productId: number) => {
-    return cart.some((item) => item.id === productId);
+    return cart.some((item) => item.product.id === productId);
+  };
+
+  const getCartItemQuantity = (productId: number) => {
+    const item = cart.find((item) => item.product.id === productId);
+    return item?.quantity || 0;
   };
 
   const triggerAnimation = (product: Product, type: "wishlist" | "cart") => {
@@ -99,8 +117,9 @@ export const ShoppingProvider = ({ children }: ShoppingProviderProps) => {
     removeFromCart,
     isInWishlist,
     isInCart,
+    getCartItemQuantity,
     wishlistCount: wishlist.length,
-    cartCount: cart.length,
+    cartCount: cart.reduce((total, item) => total + item.quantity, 0),
     triggerAnimation,
     animatingProduct,
   };

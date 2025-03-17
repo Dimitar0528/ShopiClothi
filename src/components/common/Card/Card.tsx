@@ -3,13 +3,24 @@ import { Link, useNavigate } from "react-router";
 import "./Card.css";
 import { Product } from "../../../types/api";
 import { useShoppingContext } from "../../../contexts/ShoppingContext";
-import ProductModal from "../ProductModal/ProductModal";
-import { RenderProductStars } from "../RenderProductStars/RenderProductStars";
+import ProductModal from "../../common/ProductModal/ProductModal";
+import { getProductLabels } from "../../../utils/productLabels";
+import { RenderProductStars } from "../../common/RenderProductStars/RenderProductStars";
 
-export default function Card({ id, image, title, description, price, rating }: Product) {
+export default function Card({
+  id,
+  image,
+  title,
+  description,
+  price,
+  rating,
+  stock,
+  dateAdded,
+}: Product) {
   const cardRef = useRef<HTMLAnchorElement>(null);
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
+  const quantity = 1;
   const {
     addToWishlist,
     addToCart,
@@ -17,12 +28,24 @@ export default function Card({ id, image, title, description, price, rating }: P
     isInCart,
     removeFromWishlist,
     removeFromCart,
+    getCartItemQuantity,
     triggerAnimation,
   } = useShoppingContext();
-  const [cardPosition, setCardPosition] = useState({ x: 100, y: 100 });
+  const [cardPosition, setCardPosition] = useState({ x: 0, y: 0 });
 
   // Current product combined from props
-  const product: Product = { id, image, title, description, price, rating };
+  const product: Product = {
+    id,
+    image,
+    title,
+    description,
+    price,
+    rating,
+    stock,
+    dateAdded,
+  };
+  const labels = getProductLabels(product);
+  const currentCartQuantity = getCartItemQuantity(id);
 
   useEffect(() => {
     // use IntersectionObserver for scroll-based animations
@@ -97,6 +120,9 @@ export default function Card({ id, image, title, description, price, rating }: P
     if (document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
     }
+
+    if (stock === 0) return; // Don't add if out of stock
+
     if (isInCart(id)) {
       removeFromCart(id);
     } else {
@@ -109,7 +135,11 @@ export default function Card({ id, image, title, description, price, rating }: P
         `${cardPosition.y}px`
       );
 
-      addToCart(product);
+      // Check if adding quantity would exceed stock
+      const totalQuantity = currentCartQuantity + quantity;
+      if (totalQuantity > stock) return;
+
+      addToCart(product, quantity);
       triggerAnimation(product, "cart");
     }
   };
@@ -125,6 +155,7 @@ export default function Card({ id, image, title, description, price, rating }: P
     setModalOpen(true);
   };
 
+  // Handle card click to navigate to product details page
   const handleCardClick = (e: React.MouseEvent) => {
     // Only navigate if the click wasn't on an action button
     if (!(e.target as HTMLElement).closest(".action")) {
@@ -140,6 +171,16 @@ export default function Card({ id, image, title, description, price, rating }: P
         ref={cardRef}
         onClick={handleCardClick}>
         <div className="img-container">
+          <div className="product-labels">
+            {labels.map((label, index) => (
+              <span
+                key={index}
+                className="product-label"
+                style={{ backgroundColor: label.color }}>
+                {label.text}
+              </span>
+            ))}
+          </div>
           <img src={image} alt={title} />
         </div>
 
@@ -157,16 +198,25 @@ export default function Card({ id, image, title, description, price, rating }: P
             <li
               tabIndex={0}
               onClick={handleCartToggle}
-              className={isInCart(id) ? "active" : ""}>
+              className={`${isInCart(id) ? "active" : ""} ${
+                stock === 0 ? "disabled" : ""
+              }`}>
               <i className="fa fa-shopping-cart" aria-hidden="true"></i>
-              <span>{isInCart(id) ? "Remove from cart" : "Add to cart"}</span>
+              <span>
+                {stock === 0
+                  ? "Out of Stock"
+                  : isInCart(id)
+                  ? "Remove from cart"
+                  : "Add to cart"}
+              </span>
             </li>
             <li tabIndex={0} onClick={handleViewDetails}>
               <i className="fa fa-eye" aria-hidden="true"></i>
               <span>View Details</span>
             </li>
           </ul>
-          <h3 className="productName">{title}</h3>
+          <div className="productName">{title}</div>
+
           <div className="price-rating">
             <h2>{price}$</h2>
             <div className="rating">{RenderProductStars(rating.rate)}</div>
