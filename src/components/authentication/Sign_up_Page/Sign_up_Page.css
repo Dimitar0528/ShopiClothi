@@ -68,12 +68,12 @@
     margin-top: 3px;
     font-size: 14px;
     color: #000000;
-    text-decoration: underline;
+        text-decoration: underline;
 }
 .login--link:hover {
     font-weight: bold; /* Change font weight to bold */
-    transition: ease-in-out 0.3s;
+    transition: transform 0.3s ease-in-out;
+    transform: scale(1.1);
     color: inherit; /* Change color to red */
     font-size: 14px; /* Increase font size */
-
 }

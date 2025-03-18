@@ -1,4 +1,7 @@
 import {Link } from "react-router";
+import Socials from "../Inputs&Social-LogIn/Socials";
+import InputFields from "../Inputs&Social-LogIn/InputFields";
+
 import  "./Log_in_Page.css";
 
  export default function Log_in_Page() {
@@ -8,12 +11,16 @@ import  "./Log_in_Page.css";
                 <form className="login-form">
                     <h1 className="login-form--title">Log in</h1>
                         <div className="login-form--info--container">
-                        <input type="text" className="login-form--input" placeholder="Username" />
-                        <input type="password" className="login-form--input" placeholder="Password" />
+                        <Socials/>
+                        <p className="separator"><span>or</span></p>
+                        <InputFields type="email" placeholder="Email"/>
+                        <InputFields type="password" placeholder="Password"/>
                         </div>
                         <button className="login-form--button">Log in</button>
+                       
                         <p className="login-form--text">Don't have an account? </p>
                         <Link to="/sign-up" className="signup--link">Sign up</Link>
+                        <Link className="forgoten--password">Forgot your password?</Link>
                 </form>
 
             </div>
