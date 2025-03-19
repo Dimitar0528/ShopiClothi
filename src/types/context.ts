@@ -53,13 +53,6 @@ export type ShoppingContextType = {
    */
   isInCart: (productId: number) => boolean;
 
-  /**
-   * Retrieves the quantity of a specific product in the cart.
-   * @param productId - The ID of the product.
-   * @returns The quantity of the product in the cart.
-   */
-  getCartItemQuantity: (productId: number) => number;
-
   /** The total number of items in the wishlist */
   wishlistCount: number;
 
@@ -70,8 +63,13 @@ export type ShoppingContextType = {
    * Triggers an animation when adding/removing a product from the wishlist or cart.
    * @param product - The product being animated.
    * @param type - The type of action triggering the animation ("wishlist" or "cart").
+   * @param startPosition - The starting position for the animation.
    */
-  triggerAnimation: (product: Product, type: "wishlist" | "cart") => void;
+  triggerAnimation: (
+    product: Product,
+    type: "wishlist" | "cart",
+    startPosition: { x: number; y: number }
+  ) => void;
 
   /**
    * Stores the product currently being animated.
@@ -79,6 +77,7 @@ export type ShoppingContextType = {
   animatingProduct: {
     product: Product | null;
     type: "wishlist" | "cart" | null;
+    startPosition: { x: number; y: number };
   };
 };
 

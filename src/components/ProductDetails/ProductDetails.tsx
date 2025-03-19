@@ -6,23 +6,28 @@ import "./ProductDetails.css";
 import { RenderProductStars } from "../common/RenderProductStars/RenderProductStars";
 // @ts-expect-error: No type definitions available for this package
 import ImageZoom from "react-image-zooom";
+import { useHandleCartToggle, useHandleWishlistToggle } from "../../hooks/useHandleShoppingBag";
 
 export default function ProductDetails() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const location = useLocation();
-  const [product, setProduct] = useState<Product | null>(null);
+  const [product, setProduct] = useState<Product>({} as Product);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const [handleWishlistToggle] = useHandleWishlistToggle(
+    "product-detail-content",
+    "product-detail-image img"
+  );
+
+  const [handleCartToggle] = useHandleCartToggle(
+    "product-detail-content",
+    "product-detail-image img"
+  );
   const {
-    addToWishlist,
-    addToCart,
     isInWishlist,
     isInCart,
-    removeFromWishlist,
-    removeFromCart,
-    triggerAnimation,
   } = useShoppingContext();
 
   useEffect(() => {
@@ -68,28 +73,6 @@ export default function ProductDetails() {
     }, 50);
   };
 
-  const handleWishlistToggle = () => {
-    if (!product) return;
-
-    if (isInWishlist(product.id)) {
-      removeFromWishlist(product.id);
-    } else {
-      addToWishlist(product);
-      triggerAnimation(product, "wishlist");
-    }
-  };
-
-  const handleCartToggle = () => {
-    if (!product) return;
-
-    if (isInCart(product.id)) {
-      removeFromCart(product.id);
-    } else {
-      addToCart(product);
-      triggerAnimation(product, "cart");
-    }
-  };
-
   if (loading) {
     return (
       <div className="product-detail-loading">Loading product details...</div>
@@ -114,7 +97,9 @@ export default function ProductDetails() {
       </button>
 
       <div className="product-detail-content">
-        <div title="Click to zoom image" className="product-detail-image">
+        <div
+          title="Click the image to zoom it"
+          className="product-detail-image">
           <ImageZoom src={product.image} alt={product.title} zoom="200" />
         </div>
 
@@ -123,11 +108,8 @@ export default function ProductDetails() {
 
           <div className="product-detail-price-rating">
             <div className="product-detail-price">${product.price}</div>
-            <div
-              className={`product-detail-stock`}>
-              {product.stock === 0
-                ? "Out of stock"
-                : `In stock`}
+            <div className={`product-detail-stock`}>
+              {product.stock === 0 ? "Out of stock" : `In stock`}
             </div>
 
             <div className="product-detail-rating">
@@ -149,7 +131,7 @@ export default function ProductDetails() {
               className={`action-button wishlist ${
                 isInWishlist(product.id) ? "active" : ""
               }`}
-              onClick={handleWishlistToggle}>
+              onClick={(e) =>handleWishlistToggle(product,e)}>
               <i className="fa fa-heart" aria-hidden="true"></i>
               {isInWishlist(product.id)
                 ? "Remove from Wishlist"
@@ -160,7 +142,7 @@ export default function ProductDetails() {
               className={`action-button cart ${
                 isInCart(product.id) ? "active" : ""
               }`}
-              onClick={handleCartToggle}
+              onClick={(e) => handleCartToggle(product,e)}
               disabled={product.stock === 0}>
               <i className="fa fa-shopping-cart" aria-hidden="true"></i>
               {product.stock === 0

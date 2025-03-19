@@ -1,9 +1,13 @@
 import { Route, Routes, Navigate, useLocation } from "react-router";
+
+import useDynamicTitle from "./hooks/useDynamicTitle";
+
+import { ToastContainer } from "react-toastify";
+
 import LandingPage from "./components/LandingPage/LandingPage";
 import Newsletter from "./components/Newsletter/Newsletter";
 import Footer from "./components/layout/Footer/Footer";
 import Faq from "./components/layout/Footer/FAQ/FAQ";
-import useDynamicTitle from "./hooks/useDynamicTitle";
 import PrivacyPolicy from "./components/layout/Footer/Privacy_Policy/Privacy_Policy";
 import Header from "./components/layout/Header/Header";
 import TermsOfService from "./components/layout/Footer/Terms_Of_Service/Terms_Of_Service";
@@ -34,26 +38,27 @@ function App() {
 
   return (
     <>
+      <ToastContainer />
       <ScrollToTopButton />
       <Header />
-        <div id="main-content">
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/profile" element={<Log_in_Page />} />
-            <Route path="/sign-up" element={<Sign_up_Page />} />
-            <Route path="/shopping-bag" element={<ShoppingBag />} />
-            <Route path="/products/:id" element={<ProductDetails />} />
-            <Route path="/about-us" element={<AboutUs />} />
-            <Route path="/contact-us" element={<ContactUs />} />
-            <Route path="/faq" element={<Faq />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/terms-of-service" element={<TermsOfService />} />
-            <Route path="*" element={<Navigate to={"/"} />} />
-          </Routes>
+      <div id="main-content">
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/profile" element={<Log_in_Page />} />
+          <Route path="/sign-up" element={<Sign_up_Page />} />
+          <Route path="/shopping-bag" element={<ShoppingBag />} />
+          <Route path="/products/:id" element={<ProductDetails />} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/contact-us" element={<ContactUs />} />
+          <Route path="/faq" element={<Faq />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="*" element={<Navigate to={"/"} />} />
+        </Routes>
 
-          {/* Render Newsletter only if the current path is NOT in the hideNewsletterRoutes list */}
-          {!shouldHideNewsletter() && <Newsletter />}
-        </div>
+        {/* Render Newsletter only if the current path is NOT in the hideNewsletterRoutes list */}
+        {!shouldHideNewsletter() && <Newsletter />}
+      </div>
       <Footer />
     </>
   );

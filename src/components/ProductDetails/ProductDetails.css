@@ -30,7 +30,7 @@
 
 @media (min-width: 768px) {
     .product-detail-content {
-        grid-template-columns: .8fr 1fr;
+        grid-template-columns: .75fr 1fr;
     }
 }
 
@@ -43,6 +43,12 @@
     justify-content: center;
     align-items: center;
     height: 400px;
+    & figure{
+        transition: scale .25s;
+    }
+    &:hover figure{
+        scale: 1.05;
+    }
 }
 
 .product-detail-image img {

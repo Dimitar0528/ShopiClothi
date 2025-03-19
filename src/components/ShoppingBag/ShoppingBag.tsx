@@ -1,41 +1,22 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import { useShoppingContext } from "../../contexts/ShoppingContext";
-import { Product } from "../../types/api";
 import "./ShoppingBag.css";
-
+import { useHandleCartToggle, useHandleWishlistToggle } from "../../hooks/useHandleShoppingBag";
 export default function ShoppingBag() {
   const {
     cart,
     wishlist,
     removeFromCart,
     removeFromWishlist,
-    addToWishlist,
-    addToCart,
-    isInWishlist,
-    isInCart,
-    triggerAnimation,
   } = useShoppingContext();
   const [activeTab, setActiveTab] = useState<"cart" | "wishlist">(() => {
     const tab = localStorage.getItem("tab") as "cart" | "wishlist";
     return tab ? tab : "cart";
   });
 
-  // Handle adding an item from cart to wishlist
-  const handleAddToWishlist = (item: Product) => {
-    if (!isInWishlist(item.id)) {
-      addToWishlist(item);
-      triggerAnimation(item, "wishlist");
-    }
-  };
-
-  // Handle adding an item from wishlist to cart
-  const handleAddToCart = (item: Product) => {
-    if (!isInCart(item.id)) {
-      addToCart(item);
-      triggerAnimation(item, "cart");
-    }
-  };
+  const [handleWishlistToggle] = useHandleWishlistToggle("item-card", "img");
+  const [handleCartToggle] = useHandleCartToggle("item-card", "img");
 
   // Handle setting the active tab (cart or wishlist)
   const handleSetActiveTab = (tab: "cart" | "wishlist") => {
@@ -87,7 +68,9 @@ export default function ShoppingBag() {
                         </button>
                         <button
                           className="move-btn wishlist"
-                          onClick={() => handleAddToWishlist(cartItem.product)}>
+                          onClick={(e) =>
+                            handleWishlistToggle(cartItem.product,e)
+                          }>
                           Add to Wishlist
                         </button>
                       </div>
@@ -135,7 +118,7 @@ export default function ShoppingBag() {
                         </button>
                         <button
                           className="move-btn cart"
-                          onClick={() => handleAddToCart(item)}
+                          onClick={(e) => handleCartToggle(item,e)}
                           disabled={item.stock === 0}>
                           {item.stock === 0 ? "Out of Stock" : "Add to Cart"}
                         </button>

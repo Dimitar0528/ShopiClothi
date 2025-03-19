@@ -4,8 +4,9 @@ import "./Card.css";
 import { Product } from "../../../types/api";
 import { useShoppingContext } from "../../../contexts/ShoppingContext";
 import ProductModal from "../../common/ProductModal/ProductModal";
-import { getProductLabels } from "../../../utils/productLabels";
+import { getProductLabels } from "../../../utils/getProductLabels";
 import { RenderProductStars } from "../../common/RenderProductStars/RenderProductStars";
+import { useHandleCartToggle, useHandleWishlistToggle } from "../../../hooks/useHandleShoppingBag";
 
 export default function Card({
   id,
@@ -17,22 +18,19 @@ export default function Card({
   stock,
   dateAdded,
 }: Product) {
+  const {
+    isInWishlist,
+    isInCart,
+  } = useShoppingContext();
   const cardRef = useRef<HTMLAnchorElement>(null);
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
-  const quantity = 1;
-  const {
-    addToWishlist,
-    addToCart,
-    isInWishlist,
-    isInCart,
-    removeFromWishlist,
-    removeFromCart,
-    getCartItemQuantity,
-    triggerAnimation,
-  } = useShoppingContext();
-  const [cardPosition, setCardPosition] = useState({ x: 0, y: 0 });
-
+  
+  const [handleWishlistToggle] = useHandleWishlistToggle(
+    "card",
+    "card-image img"
+  );
+  const [handleCartToggle] = useHandleCartToggle("card", "card-image img");
   // Current product combined from props
   const product: Product = {
     id,
@@ -45,8 +43,6 @@ export default function Card({
     dateAdded,
   };
   const labels = getProductLabels(product);
-  const currentCartQuantity = getCartItemQuantity(id);
-
   useEffect(() => {
     // use IntersectionObserver for scroll-based animations
     const observer = new IntersectionObserver(
@@ -67,82 +63,6 @@ export default function Card({
       if (cardElement) observer.unobserve(cardElement);
     };
   }, []);
-
-  useEffect(() => {
-    // Set initial card position for animation to use
-    const updateCardPosition = () => {
-      if (cardRef.current) {
-        const rect = cardRef.current.getBoundingClientRect();
-        setCardPosition({
-          x: rect.left + rect.width / 2,
-          y: rect.top + rect.height / 2,
-        });
-      }
-    };
-
-    updateCardPosition();
-    window.addEventListener("resize", updateCardPosition);
-    return () => window.removeEventListener("resize", updateCardPosition);
-  }, []);
-
-  // Handle wishlist toggle
-  const handleWishlistToggle = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    // Ensure the active element is an HTML element before calling blur
-    if (document.activeElement instanceof HTMLElement) {
-      document.activeElement.blur();
-    }
-
-    if (isInWishlist(id)) {
-      removeFromWishlist(id);
-    } else {
-      // Set CSS variables for animation start position
-      document.documentElement.style.setProperty(
-        "--start-x",
-        `${cardPosition.x}px`
-      );
-      document.documentElement.style.setProperty(
-        "--start-y",
-        `${cardPosition.y}px`
-      );
-
-      addToWishlist(product);
-      triggerAnimation(product, "wishlist");
-    }
-  };
-
-  // Handle cart toggle
-  const handleCartToggle = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (document.activeElement instanceof HTMLElement) {
-      document.activeElement.blur();
-    }
-
-    if (stock === 0) return; // Don't add if out of stock
-
-    if (isInCart(id)) {
-      removeFromCart(id);
-    } else {
-      document.documentElement.style.setProperty(
-        "--start-x",
-        `${cardPosition.x}px`
-      );
-      document.documentElement.style.setProperty(
-        "--start-y",
-        `${cardPosition.y}px`
-      );
-
-      // Check if adding quantity would exceed stock
-      const totalQuantity = currentCartQuantity + quantity;
-      if (totalQuantity > stock) return;
-
-      addToCart(product, quantity);
-      triggerAnimation(product, "cart");
-    }
-  };
 
   // Handle view details
   const handleViewDetails = (e: React.MouseEvent) => {
@@ -188,7 +108,7 @@ export default function Card({
           <ul className="action">
             <li
               tabIndex={0}
-              onClick={handleWishlistToggle}
+              onClick={(e) => handleWishlistToggle(product,e)}
               className={isInWishlist(id) ? "active" : ""}>
               <i className="fa fa-heart" aria-hidden="true"></i>
               <span>
@@ -197,7 +117,7 @@ export default function Card({
             </li>
             <li
               tabIndex={0}
-              onClick={handleCartToggle}
+              onClick={(e) => handleCartToggle(product,e)}
               className={`${isInCart(id) ? "active" : ""} ${
                 stock === 0 ? "disabled" : ""
               }`}>
