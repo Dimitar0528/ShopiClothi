@@ -79,6 +79,18 @@ export type ShoppingContextType = {
     type: "wishlist" | "cart" | null;
     startPosition: { x: number; y: number };
   };
+
+  /**
+   * Handles the "Enter" key press event when an element is focused via keyboard navigation.
+   * Triggers the provided action if the "Enter" key is pressed.
+   *
+   * @param e - The keyboard event object.
+   * @param action - The function to execute when "Enter" is pressed.
+   */
+  handleEnterOrSpaceKeyPressOnTabFocus: (
+    e: React.KeyboardEvent,
+    action: (e: React.KeyboardEvent) => void
+  ) => void;
 };
 
 /**

@@ -3,13 +3,10 @@ import { Link } from "react-router";
 import { useShoppingContext } from "../../contexts/ShoppingContext";
 import "./ShoppingBag.css";
 import { useHandleCartToggle, useHandleWishlistToggle } from "../../hooks/useHandleShoppingBag";
+import showToast from "../../utils/showToast";
 export default function ShoppingBag() {
-  const {
-    cart,
-    wishlist,
-    removeFromCart,
-    removeFromWishlist,
-  } = useShoppingContext();
+  const { cart, wishlist, removeFromCart, removeFromWishlist, isInCart,isInWishlist } =
+    useShoppingContext();
   const [activeTab, setActiveTab] = useState<"cart" | "wishlist">(() => {
     const tab = localStorage.getItem("tab") as "cart" | "wishlist";
     return tab ? tab : "cart";
@@ -58,7 +55,7 @@ export default function ShoppingBag() {
                       />
                     </Link>
                     <div className="item-details">
-                      <h3>{cartItem.product.title}</h3>
+                      <h2>{cartItem.product.title}</h2>
                       <p className="price">${cartItem.product.price}</p>
                       <div className="button-group">
                         <button
@@ -67,11 +64,13 @@ export default function ShoppingBag() {
                           Remove
                         </button>
                         <button
+                          disabled={isInWishlist(cartItem.product.id)}
                           className="move-btn wishlist"
-                          onClick={(e) =>
-                            handleWishlistToggle(cartItem.product,e)
-                          }>
-                          Add to Wishlist
+                          onClick={(e) =>{
+                            handleWishlistToggle(cartItem.product, e);
+                            showToast("Product removed from cart!", "success");
+                          }}>
+                          {isInWishlist(cartItem.product.id) ? 'Already in wishlist' : 'Add to Wishlist'}
                         </button>
                       </div>
                     </div>
@@ -94,7 +93,7 @@ export default function ShoppingBag() {
                       <img src={item.image} alt={item.title} />
                     </Link>
                     <div className="item-details">
-                      <h3>{item.title}</h3>
+                      <h2>{item.title}</h2>
                       <div
                         style={{
                           display: "flex",
@@ -113,14 +112,17 @@ export default function ShoppingBag() {
                       <div className="button-group">
                         <button
                           className="remove-btn"
-                          onClick={() => removeFromWishlist(item.id)}>
+                          onClick={() => {
+                            removeFromWishlist(item.id)
+                            showToast("Product removed from wishlist!", "success")
+                            }}>
                           Remove
                         </button>
                         <button
                           className="move-btn cart"
-                          onClick={(e) => handleCartToggle(item,e)}
-                          disabled={item.stock === 0}>
-                          {item.stock === 0 ? "Out of Stock" : "Add to Cart"}
+                          onClick={(e) => handleCartToggle(item, e)}
+                          disabled={item.stock === 0 || isInCart(item.id)}>
+                          {isInCart(item.id) ? "Already in cart" : item.stock === 0 ? "Out of Stock" : "Add to Cart"}
                         </button>
                       </div>
                     </div>

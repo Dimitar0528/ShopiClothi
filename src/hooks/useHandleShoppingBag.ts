@@ -18,15 +18,14 @@ export const useHandleCartToggle = (
     useShoppingContext();
   const quantity = 1;
 
-  function handleCartToggle(product: Product, e?: React.MouseEvent) {
+  function handleCartToggle (product: Product, e: React.MouseEvent | React.KeyboardEvent) {
       if (!product || product.stock === 0) return; // Prevent adding if out of stock
 
       if (containerSelector === "card") {
-        // remove focus if the container is .card
-        e?.preventDefault();
-        e?.stopPropagation();
-
-        if (document.activeElement instanceof HTMLElement) {
+        e.preventDefault();
+        e.stopPropagation();
+        // Check if the event is a 'click' event and if the currently focused element is an instance of HTMLElement
+        if (e.type === "click" && document.activeElement instanceof HTMLElement) {
           document.activeElement.blur();
         }
       }
@@ -66,17 +65,18 @@ export const useHandleWishlistToggle = (
   const { isInWishlist, removeFromWishlist, addToWishlist, triggerAnimation } =
     useShoppingContext();
 
-  function handleWishlistToggle(product: Product, e: React.MouseEvent) {
+  function handleWishlistToggle(
+    product: Product,
+    e: React.MouseEvent | React.KeyboardEvent
+  ) {
     if (containerSelector === "card") {
-      // remove focus if the container is .card
       e.preventDefault();
       e.stopPropagation();
-
-      if (document.activeElement instanceof HTMLElement) {
+      // Check if the event is a 'click' event and if the currently focused element is an instance of HTMLElement
+      if (e.type === "click" && document.activeElement instanceof HTMLElement) {
         document.activeElement.blur();
       }
     }
-
     const productContainer = (e.currentTarget as HTMLElement)?.closest(
       `.${containerSelector}`
     ) as HTMLElement; // Get the specific product clicked
@@ -87,10 +87,10 @@ export const useHandleWishlistToggle = (
       `.${imageSelector}`
     );
 
-    if (isInWishlist(product.id)) {
-      removeFromWishlist(product.id);
-      showToast("Product removed from cart!", "success");
-    } else {
+  if (isInWishlist(product.id)) {
+    removeFromWishlist(product.id);
+    showToast("Product removed from wishlist!", "success");
+  } else {
       addToWishlist(product);
       showToast("Product added to wishlist!", "success");
       triggerAnimation(product, "wishlist", startPosition);

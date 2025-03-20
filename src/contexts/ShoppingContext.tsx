@@ -107,6 +107,19 @@ export const ShoppingProvider = ({ children }: ShoppingProviderProps) => {
     }, 1200); // Animation duration
   };
 
+const handleEnterOrSpaceKeyPressOnTabFocus = (
+  e: React.KeyboardEvent,
+  action: (e: React.KeyboardEvent) => void
+) => {
+  if (e.key === "Enter" || e.key === " ") {
+    if (e.key === " ") {
+      e.preventDefault();
+    }
+    action(e);
+  }
+};
+
+
   const value = {
     wishlist,
     cart,
@@ -120,6 +133,7 @@ export const ShoppingProvider = ({ children }: ShoppingProviderProps) => {
     cartCount: cart.length,
     triggerAnimation,
     animatingProduct,
+    handleEnterOrSpaceKeyPressOnTabFocus,
   };
 
   return (

@@ -41,7 +41,7 @@ function App() {
       <ToastContainer />
       <ScrollToTopButton />
       <Header />
-      <div id="main-content">
+      <main id="main-content">
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/profile" element={<Log_in_Page />} />
@@ -58,7 +58,7 @@ function App() {
 
         {/* Render Newsletter only if the current path is NOT in the hideNewsletterRoutes list */}
         {!shouldHideNewsletter() && <Newsletter />}
-      </div>
+      </main>
       <Footer />
     </>
   );

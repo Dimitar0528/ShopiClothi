@@ -18,10 +18,8 @@ export default function Card({
   stock,
   dateAdded,
 }: Product) {
-  const {
-    isInWishlist,
-    isInCart,
-  } = useShoppingContext();
+  const { isInWishlist, isInCart, handleEnterOrSpaceKeyPressOnTabFocus } =
+    useShoppingContext();
   const cardRef = useRef<HTMLAnchorElement>(null);
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
@@ -65,7 +63,7 @@ export default function Card({
   }, []);
 
   // Handle view details
-  const handleViewDetails = (e: React.MouseEvent) => {
+  const handleViewDetails = (e: React.MouseEvent | React.KeyboardEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -108,7 +106,12 @@ export default function Card({
           <ul className="action">
             <li
               tabIndex={0}
-              onClick={(e) => handleWishlistToggle(product,e)}
+              onClick={(e) => handleWishlistToggle(product, e)}
+              onKeyDown={(e) =>
+                handleEnterOrSpaceKeyPressOnTabFocus(e, (e) =>
+                  handleWishlistToggle(product, e)
+                )
+              }
               className={isInWishlist(id) ? "active" : ""}>
               <i className="fa fa-heart" aria-hidden="true"></i>
               <span>
@@ -117,7 +120,12 @@ export default function Card({
             </li>
             <li
               tabIndex={0}
-              onClick={(e) => handleCartToggle(product,e)}
+              onClick={(e) => handleCartToggle(product, e)}
+              onKeyDown={(e) =>
+                handleEnterOrSpaceKeyPressOnTabFocus(e, (e) =>
+                  handleCartToggle(product, e)
+                )
+              }
               className={`${isInCart(id) ? "active" : ""} ${
                 stock === 0 ? "disabled" : ""
               }`}>
@@ -130,7 +138,12 @@ export default function Card({
                   : "Add to cart"}
               </span>
             </li>
-            <li tabIndex={0} onClick={handleViewDetails}>
+            <li
+              tabIndex={0}
+              onClick={handleViewDetails}
+              onKeyDown={(e) =>
+                handleEnterOrSpaceKeyPressOnTabFocus(e, (e) => handleViewDetails(e))
+              }>
               <i className="fa fa-eye" aria-hidden="true"></i>
               <span>View Details</span>
             </li>

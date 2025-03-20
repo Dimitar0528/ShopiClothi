@@ -85,29 +85,13 @@
 
 .product-detail-stock {
     font-weight: bold;
-    color: hsl(134, 61%, 45%);
+    color: hsl(134, 61%, 25%);
     display: flex;
     align-items: center;
 }
 
 .product-detail-stock::before {
     content: "🟢";
-}
-
-.product-detail-stock.low-stock::before {
-    content: "🟡";
-}
-
-.product-detail-stock.out-of-stock::before {
-    content: "🔴";
-}
-
-.product-detail-stock.low-stock {
-    color: hsl(45, 100%, 45%);
-}
-
-.product-detail-stock.out-of-stock {
-    color: hsl(354, 70%, 45%);
 }
 
 .product-detail-rating {

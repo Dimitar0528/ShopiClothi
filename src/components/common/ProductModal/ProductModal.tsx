@@ -97,13 +97,6 @@ export default function ProductModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title">
-        <button
-          className="close-button"
-          onClick={closeModal}
-          aria-label="Close modal">
-          &times;
-        </button>
-
         <div className="modal-body">
           <div className="modal-image">
             <Link className="product-link" to={`/products/${product.id}`}>
@@ -127,7 +120,7 @@ export default function ProductModal({
                 className={`modal-action-button wishlist ${
                   isInWishlist(product.id) ? "active" : ""
                 }`}
-                onClick={(e) => handleWishlistToggle(product,e)}>
+                onClick={(e) => handleWishlistToggle(product, e)}>
                 <i className="fa fa-heart" aria-hidden="true"></i>
                 {isInWishlist(product.id)
                   ? "Remove from Wishlist"
@@ -138,9 +131,15 @@ export default function ProductModal({
                 className={`modal-action-button cart ${
                   isInCart(product.id) ? "active" : ""
                 }`}
-                onClick={(e) => handleCartToggle(product,e)}>
+                onClick={(e) => handleCartToggle(product, e)}>
                 <i className="fa fa-shopping-cart" aria-hidden="true"></i>
                 {isInCart(product.id) ? "Remove from Cart" : "Add to Cart"}
+              </button>
+              <button
+                className="close-button"
+                onClick={closeModal}
+                aria-label="Close modal">
+                &times;
               </button>
             </div>
           </div>
