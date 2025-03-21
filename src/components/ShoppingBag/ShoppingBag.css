@@ -47,11 +47,12 @@
 
 .items-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 2rem;
 }
 
 .item-card {
+    position: relative;
     display: flex;
     flex-direction: column;
     background: var(--primary-clr-100);
@@ -82,7 +83,8 @@
     flex: 1;
 }
 
-.item-details h3 {
+.item-details h2 {
+    font-size: 1.2rem;
     --_text-lines: 2;
     margin: 0;
     line-height: 1.4;
@@ -231,10 +233,13 @@
     background-color: var(--accent-clr-100);
 }
 
-.move-btn:disabled {
-    opacity: 0.5;
+.move-btn.move-btn:disabled {
+    opacity: 0.6;
     cursor: not-allowed;
     background: var(--accent-clr-300);
-    color: var(--primary-clr-100);
+    color: var(--primary-clr-900);
     border-color: var(--accent-clr-300);
+    &:where(:hover, :focus-visible){
+        background-color: var(--accent-clr-300);;
+    }
 }

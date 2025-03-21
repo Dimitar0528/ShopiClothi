@@ -4,6 +4,7 @@ import { Product } from "../../../types/api";
 import { useShoppingContext } from "../../../contexts/ShoppingContext";
 import "./ProductModal.css";
 import { RenderProductStars } from "../RenderProductStars/RenderProductStars";
+import { useHandleCartToggle, useHandleWishlistToggle } from "../../../hooks/useHandleShoppingBag";
 
 type ProductModalProps = {
   product: Product;
@@ -17,12 +18,8 @@ export default function ProductModal({
   onClose,
 }: ProductModalProps) {
   const {
-    addToWishlist,
-    addToCart,
     isInWishlist,
     isInCart,
-    removeFromWishlist,
-    removeFromCart,
   } = useShoppingContext();
 
   const modalRef = useRef<HTMLDivElement>(null);
@@ -81,21 +78,14 @@ export default function ProductModal({
     };
   }, [isOpen, closeModal]);
 
-  const handleWishlistToggle = () => {
-    if (isInWishlist(product.id)) {
-      removeFromWishlist(product.id);
-    } else {
-      addToWishlist(product);
-    }
-  };
-
-  const handleCartToggle = () => {
-    if (isInCart(product.id)) {
-      removeFromCart(product.id);
-    } else {
-      addToCart(product);
-    }
-  };
+  const [handleWishlistToggle] = useHandleWishlistToggle(
+    "modal-content",
+    "modal-image img"
+  );
+  const [handleCartToggle] = useHandleCartToggle(
+    "modal-content",
+    "modal-image img"
+  );
 
   return (
     <div
@@ -107,13 +97,6 @@ export default function ProductModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title">
-        <button
-          className="close-button"
-          onClick={closeModal}
-          aria-label="Close modal">
-          &times;
-        </button>
-
         <div className="modal-body">
           <div className="modal-image">
             <Link className="product-link" to={`/products/${product.id}`}>
@@ -137,7 +120,7 @@ export default function ProductModal({
                 className={`modal-action-button wishlist ${
                   isInWishlist(product.id) ? "active" : ""
                 }`}
-                onClick={handleWishlistToggle}>
+                onClick={(e) => handleWishlistToggle(product, e)}>
                 <i className="fa fa-heart" aria-hidden="true"></i>
                 {isInWishlist(product.id)
                   ? "Remove from Wishlist"
@@ -148,9 +131,15 @@ export default function ProductModal({
                 className={`modal-action-button cart ${
                   isInCart(product.id) ? "active" : ""
                 }`}
-                onClick={handleCartToggle}>
+                onClick={(e) => handleCartToggle(product, e)}>
                 <i className="fa fa-shopping-cart" aria-hidden="true"></i>
                 {isInCart(product.id) ? "Remove from Cart" : "Add to Cart"}
+              </button>
+              <button
+                className="close-button"
+                onClick={closeModal}
+                aria-label="Close modal">
+                &times;
               </button>
             </div>
           </div>

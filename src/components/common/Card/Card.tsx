@@ -1,37 +1,39 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router";
+import "react-loading-skeleton/dist/skeleton.css";
 import "./Card.css";
 import { Product } from "../../../types/api";
 import { useShoppingContext } from "../../../contexts/ShoppingContext";
 import ProductModal from "../../common/ProductModal/ProductModal";
-import { getProductLabels } from "../../../utils/productLabels";
+import { getProductLabels } from "../../../utils/getProductLabels";
 import { RenderProductStars } from "../../common/RenderProductStars/RenderProductStars";
+import {
+  useHandleCartToggle,
+  useHandleWishlistToggle,
+} from "../../../hooks/useHandleShoppingBag";
 
 export default function Card({
   id,
   image,
   title,
   description,
+  size,
   price,
   rating,
   stock,
   dateAdded,
 }: Product) {
+  const { isInWishlist, isInCart, handleEnterOrSpaceKeyPressOnTabFocus } =
+    useShoppingContext();
   const cardRef = useRef<HTMLAnchorElement>(null);
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
-  const quantity = 1;
-  const {
-    addToWishlist,
-    addToCart,
-    isInWishlist,
-    isInCart,
-    removeFromWishlist,
-    removeFromCart,
-    getCartItemQuantity,
-    triggerAnimation,
-  } = useShoppingContext();
-  const [cardPosition, setCardPosition] = useState({ x: 0, y: 0 });
+
+  const [handleWishlistToggle] = useHandleWishlistToggle(
+    "card",
+    "card-image img"
+  );
+  const [handleCartToggle] = useHandleCartToggle("card", "card-image img");
 
   // Current product combined from props
   const product: Product = {
@@ -39,15 +41,16 @@ export default function Card({
     image,
     title,
     description,
+    size,
     price,
     rating,
     stock,
     dateAdded,
   };
   const labels = getProductLabels(product);
-  const currentCartQuantity = getCartItemQuantity(id);
 
   useEffect(() => {
+
     // use IntersectionObserver for scroll-based animations
     const observer = new IntersectionObserver(
       (entries) => {
@@ -68,84 +71,8 @@ export default function Card({
     };
   }, []);
 
-  useEffect(() => {
-    // Set initial card position for animation to use
-    const updateCardPosition = () => {
-      if (cardRef.current) {
-        const rect = cardRef.current.getBoundingClientRect();
-        setCardPosition({
-          x: rect.left + rect.width / 2,
-          y: rect.top + rect.height / 2,
-        });
-      }
-    };
-
-    updateCardPosition();
-    window.addEventListener("resize", updateCardPosition);
-    return () => window.removeEventListener("resize", updateCardPosition);
-  }, []);
-
-  // Handle wishlist toggle
-  const handleWishlistToggle = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    // Ensure the active element is an HTML element before calling blur
-    if (document.activeElement instanceof HTMLElement) {
-      document.activeElement.blur();
-    }
-
-    if (isInWishlist(id)) {
-      removeFromWishlist(id);
-    } else {
-      // Set CSS variables for animation start position
-      document.documentElement.style.setProperty(
-        "--start-x",
-        `${cardPosition.x}px`
-      );
-      document.documentElement.style.setProperty(
-        "--start-y",
-        `${cardPosition.y}px`
-      );
-
-      addToWishlist(product);
-      triggerAnimation(product, "wishlist");
-    }
-  };
-
-  // Handle cart toggle
-  const handleCartToggle = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (document.activeElement instanceof HTMLElement) {
-      document.activeElement.blur();
-    }
-
-    if (stock === 0) return; // Don't add if out of stock
-
-    if (isInCart(id)) {
-      removeFromCart(id);
-    } else {
-      document.documentElement.style.setProperty(
-        "--start-x",
-        `${cardPosition.x}px`
-      );
-      document.documentElement.style.setProperty(
-        "--start-y",
-        `${cardPosition.y}px`
-      );
-
-      // Check if adding quantity would exceed stock
-      const totalQuantity = currentCartQuantity + quantity;
-      if (totalQuantity > stock) return;
-
-      addToCart(product, quantity);
-      triggerAnimation(product, "cart");
-    }
-  };
-
   // Handle view details
-  const handleViewDetails = (e: React.MouseEvent) => {
+  const handleViewDetails = (e: React.MouseEvent | React.KeyboardEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -157,7 +84,6 @@ export default function Card({
 
   // Handle card click to navigate to product details page
   const handleCardClick = (e: React.MouseEvent) => {
-    // Only navigate if the click wasn't on an action button
     if (!(e.target as HTMLElement).closest(".action")) {
       navigate(`/products/${id}`);
     }
@@ -173,22 +99,28 @@ export default function Card({
         <div className="img-container">
           <div className="product-labels">
             {labels.map((label, index) => (
-              <span
-                key={index}
-                className="product-label"
-                style={{ backgroundColor: label.color }}>
-                {label.text}
-              </span>
-            ))}
+                <span
+                  key={index}
+                  className="product-label"
+                  style={{ backgroundColor: label.color }}>
+                  {label.text}
+                </span>
+              ))
+            }
           </div>
-          <img src={image} alt={title} />
+            <img src={image} alt={title} />
         </div>
 
         <div className="content">
           <ul className="action">
             <li
               tabIndex={0}
-              onClick={handleWishlistToggle}
+              onClick={(e) => handleWishlistToggle(product, e)}
+              onKeyDown={(e) =>
+                handleEnterOrSpaceKeyPressOnTabFocus(e, (e) =>
+                  handleWishlistToggle(product, e)
+                )
+              }
               className={isInWishlist(id) ? "active" : ""}>
               <i className="fa fa-heart" aria-hidden="true"></i>
               <span>
@@ -197,7 +129,12 @@ export default function Card({
             </li>
             <li
               tabIndex={0}
-              onClick={handleCartToggle}
+              onClick={(e) => handleCartToggle(product, e)}
+              onKeyDown={(e) =>
+                handleEnterOrSpaceKeyPressOnTabFocus(e, (e) =>
+                  handleCartToggle(product, e)
+                )
+              }
               className={`${isInCart(id) ? "active" : ""} ${
                 stock === 0 ? "disabled" : ""
               }`}>
@@ -210,16 +147,27 @@ export default function Card({
                   : "Add to cart"}
               </span>
             </li>
-            <li tabIndex={0} onClick={handleViewDetails}>
+            <li
+              tabIndex={0}
+              onClick={handleViewDetails}
+              onKeyDown={(e) =>
+                handleEnterOrSpaceKeyPressOnTabFocus(e, (e) =>
+                  handleViewDetails(e)
+                )
+              }>
               <i className="fa fa-eye" aria-hidden="true"></i>
               <span>View Details</span>
             </li>
           </ul>
-          <div className="productName">{title}</div>
+          <div className="productName">
+            {title}
+          </div>
 
           <div className="price-rating">
-            <h2>{price}$</h2>
-            <div className="rating">{RenderProductStars(rating.rate)}</div>
+            <h2> {`${price}$`} </h2>
+            <div className="rating">
+              {RenderProductStars(rating.rate)}
+            </div>
           </div>
         </div>
       </Link>

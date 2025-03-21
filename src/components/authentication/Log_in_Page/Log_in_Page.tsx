@@ -20,7 +20,7 @@ import  "./Log_in_Page.css";
                        
                         <p className="login-form--text">Don't have an account? </p>
                         <Link to="/sign-up" className="signup--link">Sign up</Link>
-                        <Link className="forgoten--password">Forgot your password?</Link>
+                        <Link to='/' className="forgoten--password">Forgot your password?</Link>
                 </form>
 
             </div>

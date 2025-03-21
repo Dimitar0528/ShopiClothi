@@ -14,6 +14,11 @@ export type Product = {
   /** Description providing details about the product */
   description: string;
 
+  /**
+   * The size of the product, typically representing specific measurements (e.g., S, M, L, XL, or 32x30 for pants).
+   */
+  size: string;
+
   /** Price of the product in USD (or relevant currency) */
   price: number;
 
@@ -38,7 +43,7 @@ export type ProductLabel = {
   text: string;
 
   /** The type of label, defining the product's status */
-  type: "new" | "out-of-stock" | "low-stock" | "in-stock";
+  type: "new" | "out-of-stock" | "in-stock" | 'size';
 
   /** The color associated with the label */
   color: string;

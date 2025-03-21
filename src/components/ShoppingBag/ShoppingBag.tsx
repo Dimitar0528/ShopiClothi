@@ -1,41 +1,19 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import { useShoppingContext } from "../../contexts/ShoppingContext";
-import { Product } from "../../types/api";
 import "./ShoppingBag.css";
-
+import { useHandleCartToggle, useHandleWishlistToggle } from "../../hooks/useHandleShoppingBag";
+import showToast from "../../utils/showToast";
+import { getProductLabels } from "../../utils/getProductLabels";
 export default function ShoppingBag() {
-  const {
-    cart,
-    wishlist,
-    removeFromCart,
-    removeFromWishlist,
-    addToWishlist,
-    addToCart,
-    isInWishlist,
-    isInCart,
-    triggerAnimation,
-  } = useShoppingContext();
+  const { cart, wishlist, removeFromCart, removeFromWishlist, isInCart,isInWishlist } =
+    useShoppingContext();
   const [activeTab, setActiveTab] = useState<"cart" | "wishlist">(() => {
     const tab = localStorage.getItem("tab") as "cart" | "wishlist";
     return tab ? tab : "cart";
   });
-
-  // Handle adding an item from cart to wishlist
-  const handleAddToWishlist = (item: Product) => {
-    if (!isInWishlist(item.id)) {
-      addToWishlist(item);
-      triggerAnimation(item, "wishlist");
-    }
-  };
-
-  // Handle adding an item from wishlist to cart
-  const handleAddToCart = (item: Product) => {
-    if (!isInCart(item.id)) {
-      addToCart(item);
-      triggerAnimation(item, "cart");
-    }
-  };
+  const [handleWishlistToggle] = useHandleWishlistToggle("item-card", "img");
+  const [handleCartToggle] = useHandleCartToggle("item-card", "img");
 
   // Handle setting the active tab (cart or wishlist)
   const handleSetActiveTab = (tab: "cart" | "wishlist") => {
@@ -66,34 +44,58 @@ export default function ShoppingBag() {
               <div className="empty-message">Your cart is empty</div>
             ) : (
               <div className="items-grid">
-                {cart.map((cartItem) => (
-                  <div key={cartItem.product.id} className="item-card">
-                    <Link
-                      className="product-link"
-                      to={`/products/${cartItem.product.id}`}>
-                      <img
-                        src={cartItem.product.image}
-                        alt={cartItem.product.title}
-                      />
-                    </Link>
-                    <div className="item-details">
-                      <h3>{cartItem.product.title}</h3>
-                      <p className="price">${cartItem.product.price}</p>
-                      <div className="button-group">
-                        <button
-                          className="remove-btn"
-                          onClick={() => removeFromCart(cartItem.product.id)}>
-                          Remove
-                        </button>
-                        <button
-                          className="move-btn wishlist"
-                          onClick={() => handleAddToWishlist(cartItem.product)}>
-                          Add to Wishlist
-                        </button>
+                {cart.map((cartItem) => {
+                  const labels = getProductLabels(cartItem.product);
+
+                  return (
+                    <div key={cartItem.product.id} className="item-card">
+                      <div className="product-labels">
+                        {labels.map((label, index) => (
+                          <span
+                            key={index}
+                            className="product-label"
+                            style={{ backgroundColor: label.color }}>
+                            {label.text}
+                          </span>
+                        ))}
+                      </div>
+                      <Link
+                        className="product-link"
+                        to={`/products/${cartItem.product.id}`}>
+                        <img
+                          src={cartItem.product.image}
+                          alt={cartItem.product.title}
+                        />
+                      </Link>
+                      <div className="item-details">
+                        <h2>{cartItem.product.title}</h2>
+                        <p className="price">${cartItem.product.price}</p>
+                        <div className="button-group">
+                          <button
+                            className="remove-btn"
+                            onClick={() => {
+                              removeFromCart(cartItem.product.id);
+                              showToast(
+                                "Product removed from cart!",
+                                "success"
+                              );
+                            }}>
+                            Remove
+                          </button>
+                          <button
+                            disabled={isInWishlist(cartItem.product.id)}
+                            className="move-btn wishlist"
+                            onClick={(e) =>
+                              handleWishlistToggle(cartItem.product, e)
+                            }>
+                            {isInWishlist(cartItem.product.id)
+                              ? "Already in wishlist"
+                              : "Add to Wishlist"}
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );})}
               </div>
             )}
           </>
@@ -105,44 +107,68 @@ export default function ShoppingBag() {
               <div className="empty-message">Your wishlist is empty</div>
             ) : (
               <div className="items-grid">
-                {wishlist.map((item) => (
-                  <div key={item.id} className="item-card">
-                    <Link className="product-link" to={`/products/${item.id}`}>
-                      <img src={item.image} alt={item.title} />
-                    </Link>
-                    <div className="item-details">
-                      <h3>{item.title}</h3>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                        }}>
-                        <p className="price">${item.price}</p>
-                        <div className="stock-status">
-                          {item.stock === 0 ? (
-                            <span className="out-of-stock">Out of Stock</span>
-                          ) : (
-                            <span className="in-stock">In Stock</span>
-                          )}
+                {wishlist.map((item) => {
+                   const labels = getProductLabels(item);
+                  return (
+                    <div key={item.id} className="item-card">
+                      <div className="product-labels">
+                        {labels.map((label, index) => (
+                          <span
+                            key={index}
+                            className="product-label"
+                            style={{ backgroundColor: label.color }}>
+                            {label.text}
+                          </span>
+                        ))}
+                      </div>
+                      <Link
+                        className="product-link"
+                        to={`/products/${item.id}`}>
+                        <img src={item.image} alt={item.title} />
+                      </Link>
+                      <div className="item-details">
+                        <h2>{item.title}</h2>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                          }}>
+                          <p className="price">${item.price}</p>
+                          <div className="stock-status">
+                            {item.stock === 0 ? (
+                              <span className="out-of-stock">Out of Stock</span>
+                            ) : (
+                              <span className="in-stock">In Stock</span>
+                            )}
+                          </div>
+                        </div>
+                        <div className="button-group">
+                          <button
+                            className="remove-btn"
+                            onClick={() => {
+                              removeFromWishlist(item.id);
+                              showToast(
+                                "Product removed from wishlist!",
+                                "success"
+                              );
+                            }}>
+                            Remove
+                          </button>
+                          <button
+                            className="move-btn cart"
+                            onClick={(e) => handleCartToggle(item, e)}
+                            disabled={item.stock === 0 || isInCart(item.id)}>
+                            {isInCart(item.id)
+                              ? "Already in cart"
+                              : item.stock === 0
+                              ? "Out of Stock"
+                              : "Add to Cart"}
+                          </button>
                         </div>
                       </div>
-                      <div className="button-group">
-                        <button
-                          className="remove-btn"
-                          onClick={() => removeFromWishlist(item.id)}>
-                          Remove
-                        </button>
-                        <button
-                          className="move-btn cart"
-                          onClick={() => handleAddToCart(item)}
-                          disabled={item.stock === 0}>
-                          {item.stock === 0 ? "Out of Stock" : "Add to Cart"}
-                        </button>
-                      </div>
                     </div>
-                  </div>
-                ))}
+                  );})}
               </div>
             )}
           </>
