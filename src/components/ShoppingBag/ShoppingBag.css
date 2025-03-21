@@ -52,6 +52,7 @@
 }
 
 .item-card {
+    position: relative;
     display: flex;
     flex-direction: column;
     background: var(--primary-clr-100);

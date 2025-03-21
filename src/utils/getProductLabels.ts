@@ -25,6 +25,14 @@ export function getProductLabels(product: Product): ProductLabel[] {
     });
   }
 
+  // Add label for product size
+  if (product.size) {
+    labels.push({
+      text: `${product.size}`,
+      type: "size",
+      color: "var(--primary-clr-900)",
+    });
+  }
   // Add any additional labels here (e.g., sale, trending, etc.)
   return labels;
 }

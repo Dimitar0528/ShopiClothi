@@ -1,18 +1,24 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import { useShoppingContext } from "../../contexts/ShoppingContext";
 import { Product } from "../../types/api";
 import "./ProductDetails.css";
 import { RenderProductStars } from "../common/RenderProductStars/RenderProductStars";
 // @ts-expect-error: No type definitions available for this package
 import ImageZoom from "react-image-zooom";
-import { useHandleCartToggle, useHandleWishlistToggle } from "../../hooks/useHandleShoppingBag";
+import {
+  useHandleCartToggle,
+  useHandleWishlistToggle,
+} from "../../hooks/useHandleShoppingBag";
+import getRandomSize from "../../utils/getRandomSizeMockUp";
 
 export default function ProductDetails() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const location = useLocation();
-  const [product, setProduct] = useState<Product>({} as Product);
+  const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -25,10 +31,7 @@ export default function ProductDetails() {
     "product-detail-content",
     "product-detail-image img"
   );
-  const {
-    isInWishlist,
-    isInCart,
-  } = useShoppingContext();
+  const { isInWishlist, isInCart } = useShoppingContext();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -42,6 +45,7 @@ export default function ProductDetails() {
         const productsWithStock = {
           ...data,
           stock: 1,
+          size: getRandomSize(),
           dateAdded: "2025-03-05T17:09:16.082Z",
         };
         setProduct(productsWithStock);
@@ -75,7 +79,43 @@ export default function ProductDetails() {
 
   if (loading) {
     return (
-      <div className="product-detail-loading">Loading product details...</div>
+      <div className="product-detail-container">
+        <button className="back-button" onClick={handleGoBack}>
+          <i className="fa fa-arrow-left" aria-hidden="true"></i> Back
+        </button>
+        <div className="product-detail-content">
+          <div className="product-detail-image">
+            <Skeleton height={350} width={350} />
+          </div>
+          <div className="product-detail-info">
+            <h1>
+              <Skeleton width={300} height={30} />
+            </h1>
+            <h2 className="product-detail-stock">
+              <Skeleton width={140} height={30} />
+            </h2>
+            <div className="product-details">
+              <div className="product-detail-price">
+                <Skeleton width={80} height={30} />
+              </div>
+              <div className="product-detail-size">
+                <Skeleton width={50} height={20} />
+              </div>
+              <div className="product-detail-rating">
+                <Skeleton width={100} height={20} />
+              </div>
+            </div>
+            <div className="product-detail-description">
+              <h2>Description</h2>
+              <Skeleton count={5} />
+            </div>
+            <div className="product-detail-actions">
+              <Skeleton width={250} height={40} />
+              <Skeleton width={250} height={40} />
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 
@@ -105,11 +145,19 @@ export default function ProductDetails() {
 
         <div className="product-detail-info">
           <h1>{product.title}</h1>
+          <h2
+            className={`product-detail-stock ${
+              product.stock == 0 && "out-of-stock"
+            }`}>
+            {product.stock === 0 ? "Out of stock" : `In stock`}
+          </h2>
 
-          <div className="product-detail-price-rating">
+          <div className="product-details">
             <div className="product-detail-price">${product.price}</div>
-            <div className={`product-detail-stock`}>
-              {product.stock === 0 ? "Out of stock" : `In stock`}
+            <div className="product-detail-size">
+              <p className="size-label">
+                Size: <span className="size-value">{product.size}</span>
+              </p>
             </div>
 
             <div className="product-detail-rating">
@@ -131,7 +179,7 @@ export default function ProductDetails() {
               className={`action-button wishlist ${
                 isInWishlist(product.id) ? "active" : ""
               }`}
-              onClick={(e) =>handleWishlistToggle(product,e)}>
+              onClick={(e) => handleWishlistToggle(product, e)}>
               <i className="fa fa-heart" aria-hidden="true"></i>
               {isInWishlist(product.id)
                 ? "Remove from Wishlist"
@@ -142,7 +190,7 @@ export default function ProductDetails() {
               className={`action-button cart ${
                 isInCart(product.id) ? "active" : ""
               }`}
-              onClick={(e) => handleCartToggle(product,e)}
+              onClick={(e) => handleCartToggle(product, e)}
               disabled={product.stock === 0}>
               <i className="fa fa-shopping-cart" aria-hidden="true"></i>
               {product.stock === 0

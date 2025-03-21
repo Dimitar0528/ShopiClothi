@@ -1,18 +1,23 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router";
+import "react-loading-skeleton/dist/skeleton.css";
 import "./Card.css";
 import { Product } from "../../../types/api";
 import { useShoppingContext } from "../../../contexts/ShoppingContext";
 import ProductModal from "../../common/ProductModal/ProductModal";
 import { getProductLabels } from "../../../utils/getProductLabels";
 import { RenderProductStars } from "../../common/RenderProductStars/RenderProductStars";
-import { useHandleCartToggle, useHandleWishlistToggle } from "../../../hooks/useHandleShoppingBag";
+import {
+  useHandleCartToggle,
+  useHandleWishlistToggle,
+} from "../../../hooks/useHandleShoppingBag";
 
 export default function Card({
   id,
   image,
   title,
   description,
+  size,
   price,
   rating,
   stock,
@@ -23,25 +28,29 @@ export default function Card({
   const cardRef = useRef<HTMLAnchorElement>(null);
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
-  
+
   const [handleWishlistToggle] = useHandleWishlistToggle(
     "card",
     "card-image img"
   );
   const [handleCartToggle] = useHandleCartToggle("card", "card-image img");
+
   // Current product combined from props
   const product: Product = {
     id,
     image,
     title,
     description,
+    size,
     price,
     rating,
     stock,
     dateAdded,
   };
   const labels = getProductLabels(product);
+
   useEffect(() => {
+
     // use IntersectionObserver for scroll-based animations
     const observer = new IntersectionObserver(
       (entries) => {
@@ -75,7 +84,6 @@ export default function Card({
 
   // Handle card click to navigate to product details page
   const handleCardClick = (e: React.MouseEvent) => {
-    // Only navigate if the click wasn't on an action button
     if (!(e.target as HTMLElement).closest(".action")) {
       navigate(`/products/${id}`);
     }
@@ -91,15 +99,16 @@ export default function Card({
         <div className="img-container">
           <div className="product-labels">
             {labels.map((label, index) => (
-              <span
-                key={index}
-                className="product-label"
-                style={{ backgroundColor: label.color }}>
-                {label.text}
-              </span>
-            ))}
+                <span
+                  key={index}
+                  className="product-label"
+                  style={{ backgroundColor: label.color }}>
+                  {label.text}
+                </span>
+              ))
+            }
           </div>
-          <img src={image} alt={title} />
+            <img src={image} alt={title} />
         </div>
 
         <div className="content">
@@ -142,17 +151,23 @@ export default function Card({
               tabIndex={0}
               onClick={handleViewDetails}
               onKeyDown={(e) =>
-                handleEnterOrSpaceKeyPressOnTabFocus(e, (e) => handleViewDetails(e))
+                handleEnterOrSpaceKeyPressOnTabFocus(e, (e) =>
+                  handleViewDetails(e)
+                )
               }>
               <i className="fa fa-eye" aria-hidden="true"></i>
               <span>View Details</span>
             </li>
           </ul>
-          <div className="productName">{title}</div>
+          <div className="productName">
+            {title}
+          </div>
 
           <div className="price-rating">
-            <h2>{price}$</h2>
-            <div className="rating">{RenderProductStars(rating.rate)}</div>
+            <h2> {`${price}$`} </h2>
+            <div className="rating">
+              {RenderProductStars(rating.rate)}
+            </div>
           </div>
         </div>
       </Link>
