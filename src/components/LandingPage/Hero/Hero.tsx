@@ -1,9 +1,11 @@
 import "./Hero.css";
+import NetworkAnimation from "./NetworkAnimation";
 
 export default function Hero() {
   return (
     <>
       <section className="hero">
+        <NetworkAnimation />
         <div className="hero-content">
           <div className="hero-content-inner">
             <header className="heading">
@@ -14,7 +16,7 @@ export default function Hero() {
               clothes to update your look. Curated to match your unique style
               while keeping the planet in mind.
             </p>
-            <a href="#newest" className="btn">
+            <a href="#featured" className="btn">
               <span>Start dressing well</span>
             </a>
           </div>
@@ -22,4 +24,4 @@ export default function Hero() {
       </section>
     </>
   );
-};
+}

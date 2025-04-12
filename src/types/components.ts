@@ -41,3 +41,18 @@ export type AnimationItem = {
    */
   endY: number;
 };
+
+export type TestimonialCardProps = {
+  quote: string;
+  author: string;
+  location: string;
+  rating: number;
+}
+
+export type FeatureCardProps = {
+  cardBorderGradient: string;
+  cardIconGradient: string;
+  cardIcon: string;
+  cardTitle: string;
+  cartContent: string;
+};
