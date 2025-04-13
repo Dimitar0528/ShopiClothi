@@ -77,7 +77,7 @@
 }
 
 .container .card .content .price-rating .fa {
-    color: hsl(49, 100%, 54%);
+    color: var(--rating-clr);
     cursor: pointer;
 }
 
@@ -189,4 +189,8 @@
     color: white;
     text-transform: uppercase;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-label:first-child{
+    color: var(--primary-clr-900);
 }

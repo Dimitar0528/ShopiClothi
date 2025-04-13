@@ -6,7 +6,7 @@
 }
 
 .scrollButton {
-    background-color: var(--secondary-clr-purple);
+    background-color: hsl(from var(--secondary-clr-purple) h s 40%);
     border: none;
     border-radius: 50%;
     padding: .25rem;

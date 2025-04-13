@@ -40,9 +40,12 @@
 
 .empty-message {
     text-align: center;
-    font-size: 1.2rem;
+    font-size: 1.25rem;
+    font-weight: bold;
     color: var(--accent-clr-900);
+    background-color: var(--accent-clr-100);
     padding: 3rem 0;
+    border-radius: 100vmax;
 }
 
 .items-grid {

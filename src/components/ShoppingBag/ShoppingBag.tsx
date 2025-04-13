@@ -41,7 +41,7 @@ export default function ShoppingBag() {
         {activeTab === "cart" && (
           <>
             {cart.length === 0 ? (
-              <div className="empty-message">Your cart is empty</div>
+              <p className="empty-message">Your cart is empty</p>
             ) : (
               <div className="items-grid">
                 {cart.map((cartItem) => {
@@ -104,7 +104,7 @@ export default function ShoppingBag() {
         {activeTab === "wishlist" && (
           <>
             {wishlist.length === 0 ? (
-              <div className="empty-message">Your wishlist is empty</div>
+              <p className="empty-message">Your wishlist is empty</p>
             ) : (
               <div className="items-grid">
                 {wishlist.map((item) => {

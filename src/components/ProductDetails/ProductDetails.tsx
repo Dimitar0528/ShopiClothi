@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -12,15 +11,17 @@ import {
   useHandleCartToggle,
   useHandleWishlistToggle,
 } from "../../hooks/useHandleShoppingBag";
+import { useQuery } from "@tanstack/react-query";
+
 import getRandomSize from "../../utils/getRandomSizeMockUp";
 
 export default function ProductDetails() {
-  const { id } = useParams<{ id: string }>();
+  const { isInWishlist, isInCart } = useShoppingContext();
+
+  const { productID } = useParams<{ productID: string }>();
   const navigate = useNavigate();
   const location = useLocation();
-  const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+
 
   const [handleWishlistToggle] = useHandleWishlistToggle(
     "product-detail-content",
@@ -31,38 +32,26 @@ export default function ProductDetails() {
     "product-detail-content",
     "product-detail-image img"
   );
-  const { isInWishlist, isInCart } = useShoppingContext();
-
-  useEffect(() => {
-    const fetchProduct = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch(`https://fakestoreapi.com/products/${id}`);
-        if (!response.ok) {
-          throw new Error("Product not found");
-        }
-        const data: Product = await response.json();
-        const productsWithStock = {
-          ...data,
-          stock: 1,
-          size: getRandomSize(),
-          dateAdded: "2025-03-05T17:09:16.082Z",
-        };
-        setProduct(productsWithStock);
-        setError(null);
-        document.title = `${data.title} - ShopiClothi`;
-      } catch (err) {
-        setError("Failed to load product");
-        console.error("Error fetching product:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (id) {
-      fetchProduct();
-    }
-  }, [id]);
+   const {isPending, error, data: product } = useQuery<Product>({
+     queryKey: ["product", productID],
+     queryFn: async () => {
+       const response = await fetch(
+         `https://fakestoreapi.com/products/${productID}`
+       );
+       if (!response.ok) {
+         throw new Error("Product not found");
+       }
+       const data: Product = await response.json();
+       document.title = `${data.title} - ShopiClothi`;
+       const productsWithStock = {
+         ...data,
+         stock: 1,
+         size: getRandomSize(),
+         dateAdded: new Date().toISOString(),
+       };
+       return productsWithStock;
+     },
+   });
 
   const handleGoBack = () => {
     const currentPath = location.pathname;
@@ -77,7 +66,7 @@ export default function ProductDetails() {
     }, 50);
   };
 
-  if (loading) {
+  if (isPending) {
     return (
       <div className="product-detail-container">
         <button className="back-button" onClick={handleGoBack}>
@@ -122,7 +111,7 @@ export default function ProductDetails() {
   if (error || !product) {
     return (
       <div className="product-detail-error">
-        <h2>{error || "Product not found"}</h2>
+        <h2>{error?.message || "Product not found"}</h2>
         <button className="back-button" onClick={handleGoBack}>
           Go Back
         </button>
