@@ -1,0 +1,96 @@
+.feature-card {
+    overflow: hidden;
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    background-color: var(--primary-clr-100);
+    position: relative;
+}
+
+.feature-card:hover {
+    transform: translateY(-0.5rem);
+}
+
+.card-border {
+    height: 4px;
+    transition: padding 0.3s ease;
+}
+
+.feature-card:hover .card-border {
+    padding: 0.25rem;
+}
+
+.violet-gradient {
+    background: linear-gradient(to right, #8b5cf6, #7c3aed);
+}
+
+.emerald-gradient {
+    background: linear-gradient(to right, #10b981, #0d9488);
+}
+
+.amber-gradient {
+    background: linear-gradient(to right, #f59e0b, #ea580c);
+}
+
+.card-content {
+    padding: 2rem 1.5rem 1.5rem;
+}
+
+.icon-container {
+    width: fit-content;
+    padding: 0.75rem;
+    border-radius: 9999px;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover .icon-container {
+    transform: scale(1.1);
+}
+
+.violet-bg {
+    background-color: #ede9fe;
+    color: #7c3aed;
+}
+
+.emerald-bg {
+    background-color: #d1fae5;
+    color: #10b981;
+}
+
+.amber-bg {
+    background-color: #fef3c7;
+    color: #f59e0b;
+}
+
+.card-title {
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.card-text {
+    color: var(--accent-clr-900);
+}
+
+.icon-chevron {
+    margin-left: 0.25rem;
+}
+
+.icon-shield::before {
+    content: "🛡️";
+}
+
+.icon-repeat::before {
+    content: "🔁";
+}
+
+.icon-zap::before {
+    content: "⚡";
+}
+
+.icon-chevron::before {
+    content: "➡️";
+}

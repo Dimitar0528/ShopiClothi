@@ -21,6 +21,7 @@ export default function Card({
   price,
   rating,
   stock,
+  featured,
   dateAdded,
 }: Product) {
   const { isInWishlist, isInCart, handleEnterOrSpaceKeyPressOnTabFocus } =
@@ -45,10 +46,10 @@ export default function Card({
     price,
     rating,
     stock,
+    featured,
     dateAdded,
   };
   const labels = getProductLabels(product);
-
   useEffect(() => {
 
     // use IntersectionObserver for scroll-based animations

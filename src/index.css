@@ -22,6 +22,7 @@
   --secondary-clr-red: hsl(350, 82%, 50%);
   --active-clr: hsl(from var(--secondary-clr-red) h s 35%);
   --selection-bg-clr: hsl(220, 10%, 65%);
+  --rating-clr: hsl(49, 100%, 54%);
 }
 
 ::selection{
@@ -35,7 +36,7 @@ html {
 
 /* Custom Scrollbar- Works in  Chrome, Edge, Safari */
 *::-webkit-scrollbar {
-  width: 12px;
+  width: .75rem;
 }
 
 *::-webkit-scrollbar-track {

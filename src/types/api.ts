@@ -30,21 +30,10 @@ export type Product = {
 
   /** Stock availability of the product */
   stock: number;
+  
+  /** Decided whether the product should be featured on the Home / Landing Page*/
+  featured: boolean;
 
   /** Date the product was added to the store in ISO string format */
   dateAdded: string;
-};
-
-/**
- * Represents a label assigned to a product, such as "new" or "out-of-stock".
- */
-export type ProductLabel = {
-  /** The text displayed on the label */
-  text: string;
-
-  /** The type of label, defining the product's status */
-  type: "new" | "out-of-stock" | "in-stock" | 'size';
-
-  /** The color associated with the label */
-  color: string;
 };

@@ -1,9 +1,17 @@
-import { Product, ProductLabel } from "../types/api";
-
+import { Product } from "../types/api";
+import { ProductLabel } from "../types/utils";
 const ONE_WEEK_MS = 7 * 24 * 60 * 60 * 1000;
 
 export function getProductLabels(product: Product): ProductLabel[] {
   const labels: ProductLabel[] = [];
+
+    if (product.featured) {
+      labels.push({
+        text: "FEATURED",
+        type: "featured",
+        color: "var(--accent-clr-300)",
+      });
+    }
 
   // Check if product is new (added within the last week)
   const addedDate = new Date(product.dateAdded);
