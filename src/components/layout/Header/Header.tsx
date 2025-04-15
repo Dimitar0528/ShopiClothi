@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "./Header.css";
 import shoppingBag from "/src/assets/bags-shopping.svg";
-import profilePic from "/src/assets/circle-user.svg";
 import search from "/src/assets/search.svg";
 import ShopiClothiLogo from "/src/assets/ShopiClothi_Logo.svg";
 import menuIcon from "/src/assets/menu-icon.svg";
@@ -9,6 +8,7 @@ import closeIcon from "/src/assets/close-icon.png";
 import { NavLink } from "react-router";
 import { useShoppingContext } from "../../../contexts/ShoppingContext";
 import AnimatedShoppingItem from "../../common/AnimatedShoppingItem/AnimatedShoppingItem";
+import ClerkUserProfile from "./ClerkUserProfile/ClerkUserProfile";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,7 +17,6 @@ export default function Header() {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-
   return (
     <header className="header-wrapper">
       {/* Animation component for flying items */}
@@ -33,9 +32,7 @@ export default function Header() {
         <nav className="navbar">
           <ul className={`nav-links ${isOpen ? "open" : ""}`}>
             <li className="profile-icon">
-              <NavLink to="/profile">
-                <img src={profilePic} alt="profile" width="32" />
-              </NavLink>
+              <ClerkUserProfile className="clerk-mobile-user-icon" />
             </li>
             <li>
               <NavLink className="nav-link" to="/">
@@ -69,21 +66,14 @@ export default function Header() {
         />
         <ul className="icons">
           <li>
-            <NavLink to="/profile">
-              <img
-                src={profilePic}
-                alt="profile"
-                width="34"
-                className={`profile ${isOpen ? "open" : ""}`}
-              />
-            </NavLink>
+            <ClerkUserProfile className="clerk-user-icon" />
           </li>
           <li className="">
             <NavLink to="/shopping-bag">
               <img
                 src={shoppingBag}
                 alt="shopping bag"
-                width="34"
+                width="30"
                 className="shopping-bag"
               />
               {cartCount > 0 && (
@@ -98,7 +88,7 @@ export default function Header() {
           </li>
           <li>
             <button className="search-btn">
-              <img src={search} alt="search" width="34" className="search" />
+              <img src={search} alt="search" width="30" className="search" />
             </button>
           </li>
         </ul>

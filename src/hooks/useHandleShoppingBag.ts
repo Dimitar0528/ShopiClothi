@@ -3,6 +3,8 @@ import { useShoppingContext } from "../contexts/ShoppingContext";
 import { getAnimationStartPosition } from "../utils/getAnimationStartPosition";
 import showToast from "../utils/showToast";
 
+
+import { useAuth } from "@clerk/clerk-react";
 /**
  * A custom hook that returns a function to handle adding or removing a product from the cart.
  *
@@ -14,6 +16,8 @@ export const useHandleCartToggle = (
   containerSelector: string,
   imageSelector: string
 ) => {
+  const { isSignedIn } = useAuth();
+
   const { isInCart, removeFromCart, addToCart, triggerAnimation } =
     useShoppingContext();
   const quantity = 1;
@@ -43,6 +47,7 @@ export const useHandleCartToggle = (
         removeFromCart(product.id);
         showToast("Product removed from cart!", "success");
       } else {
+        if(!isSignedIn) return showToast("Sign in in order to add to cart!", "error");
         addToCart(product, quantity);
         showToast("Product added to cart!", "success");
         triggerAnimation(product, "cart", startPosition);
@@ -62,6 +67,8 @@ export const useHandleWishlistToggle = (
   containerSelector: string,
   imageSelector: string
 ) => {
+  const { isSignedIn } = useAuth();
+
   const { isInWishlist, removeFromWishlist, addToWishlist, triggerAnimation } =
     useShoppingContext();
 
@@ -91,6 +98,8 @@ export const useHandleWishlistToggle = (
     removeFromWishlist(product.id);
     showToast("Product removed from wishlist!", "success");
   } else {
+     if (!isSignedIn)
+       return showToast("Sign in in order to add to wishlist!", "error");
       addToWishlist(product);
       showToast("Product added to wishlist!", "success");
       triggerAnimation(product, "wishlist", startPosition);

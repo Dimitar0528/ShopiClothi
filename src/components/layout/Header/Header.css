@@ -53,7 +53,7 @@
     text-align: center;
 }
 
-.profile-icon.open {
+.clerk-mobile-user-icon.open {
     display: block;
     position: absolute;
     top: 60px;
@@ -97,12 +97,10 @@
     .icons {
         display: none;
     }
-
-    .profile {
+    .clerk-user-icon{
         display: none;
     }
-
-    .profile-icon.open {
+    .clerk-mobile-user-icon.open {
         display: block;
         margin-top: 10px;
         text-align: center;
@@ -112,7 +110,7 @@
 }
 
 @media (min-width: 769px) {
-    .profile-icon {
+    .clerk-mobile-user-icon {
         display: none;
     }
 }
