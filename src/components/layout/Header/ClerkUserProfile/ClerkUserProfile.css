@@ -24,3 +24,226 @@
     transform: scale(0.98);
     box-shadow: 0 6px 18px rgba(31, 38, 135, 0.3);
 }
+
+
+
+/* User Roles Page Styles */
+
+.user-roles-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: var(--primary-clr-100);
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+
+}
+
+.custom-page-header {
+    font-size: 1.0625rem;
+    color: rgb(33, 33, 38);
+    font-weight: 700;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+/* Role Cards */
+.role-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+    padding-block: 1.5rem;
+}
+
+.role-card {
+    background-color: var(--accent-clr-100);
+    padding: 1rem .6rem;
+    border-radius: .5rem;
+    border: 1px solid hsl(220, 13%, 91%);
+}
+
+.role-icon-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.role-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.user-icon,
+.seller-icon {
+    width: 1.1rem;
+    aspect-ratio: 1 / 1;
+    margin-right: 12px;
+}
+
+.user-icon {
+    color: hsl(217, 91%, 60%);
+}
+
+.seller-icon {
+    color: hsl(142, 71%, 45%);
+}
+
+.feature-list {
+    margin-left: 16px;
+    line-height: 1.7;
+    list-style-type: none;
+}
+
+.current-role {
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--secondary-clr-purple)
+}
+
+.upgrade-text {
+    display: block;
+    margin-top: 1rem;
+    font-size: .9rem;
+    color: var(--primary-clr-900);
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: .4rem;
+}
+
+/* Form Styles */
+.form-container {
+    background-color: hsl(214, 100%, 97%);
+    padding: 24px;
+    border-radius: 8px;
+    border: 1px solid hsl(213, 97%, 87%);
+    margin-bottom: 32px;
+}
+
+.form-header {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 24px;
+    color: var(--secondary-clr-purple);
+}
+
+.form-description {
+    margin-bottom: 24px;
+    color: var(--accent-clr-900);
+}
+
+.application-form {
+    width: 100%;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.full-width-field {
+    display: flex;
+    flex-direction: column;
+    grid-column: 1 / -1;
+}
+
+.form-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #4b5563;
+    margin-bottom: 4px;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-select {
+    background-color: var(--primary-clr-100);
+}
+
+.form-textarea {
+    resize: vertical;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    border-color: var(--secondary-clr-purple);
+    box-shadow: 0 0 0 3px hsla(262, 53%, 50%, 0.2);
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: flex-start;
+}
+
+.form-checkbox {
+    margin-right: 8px;
+    margin-top: 2px;
+}
+
+.checkbox-label {
+    font-size: .9rem;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 16px;
+}
+
+.submit-button {
+    padding: 12px 24px;
+    background-color: var(--secondary-clr-purple);
+    color: var(--primary-clr-100);
+    font-weight: 500;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s;
+}
+
+.form-footer {
+    font-size: 14px;
+    color: #6b7280;
+    text-align: center;
+}
+
+.form-link {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.form-link:hover {
+    text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .role-grid {
+        grid-template-columns: 1fr;
+    }
+}
