@@ -1,8 +1,8 @@
 import { Route, Routes, Navigate, useLocation } from "react-router";
+import { ToastContainer } from "react-toastify";
 
 import useDynamicTitle from "./hooks/useDynamicTitle";
 
-import { ToastContainer } from "react-toastify";
 
 import LandingPage from "./components/LandingPage/LandingPage";
 import Newsletter from "./components/Newsletter/Newsletter";
@@ -47,7 +47,7 @@ function App() {
           <Route path="/profile" element={<Log_in_Page />} />
           <Route path="/sign-up" element={<Sign_up_Page />} />
           <Route path="/shopping-bag" element={<ShoppingBag />} />
-          <Route path="/products/:id" element={<ProductDetails />} />
+          <Route path="/products/:productID" element={<ProductDetails />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/faq" element={<Faq />} />
